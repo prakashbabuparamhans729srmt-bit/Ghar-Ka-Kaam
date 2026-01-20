@@ -23,6 +23,8 @@ export default function ServiceProvidersPage() {
   const serviceInfo = serviceCategories.find(s => s.id === serviceIdFromUrl);
 
   useEffect(() => {
+    const customerLocation = localStorage.getItem("customerAddress") || 'साकेत, दिल्ली';
+
     async function getBestProvider() {
       if (!serviceInfo) {
         setIsLoading(false);
@@ -38,7 +40,7 @@ export default function ServiceProvidersPage() {
 
       const input: FindBestProviderInput = {
         serviceType: serviceInfo.name,
-        customerLocation: 'साकेत, दिल्ली',
+        customerLocation: customerLocation,
         customerRequirements: 'Need quick service for a leaking tap.',
         providerDetails: relevantProviders.map(p => ({
             providerId: p.providerId,
@@ -52,6 +54,7 @@ export default function ServiceProvidersPage() {
       };
 
       try {
+        setIsLoading(true);
         const result = await findBestProvider(input);
         if (result.bestProviderId) {
             setBestProviderId(result.bestProviderId);

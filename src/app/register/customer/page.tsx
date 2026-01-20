@@ -67,6 +67,7 @@ export default function CustomerRegistration() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    localStorage.setItem("customerAddress", values.address);
     router.push("/customer/dashboard");
   }
 
@@ -74,7 +75,9 @@ export default function CustomerRegistration() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          form.setValue("address", "साकेत, दिल्ली (अनुमानित)");
+          const detectedAddress = "साकेत, दिल्ली (अनुमानित)";
+          form.setValue("address", detectedAddress);
+          localStorage.setItem("customerAddress", detectedAddress);
           toast({
             title: "लोकेशन मिल गई!",
             description: "हमने आपकी लोकेशन का अनुमान लगा लिया है।",

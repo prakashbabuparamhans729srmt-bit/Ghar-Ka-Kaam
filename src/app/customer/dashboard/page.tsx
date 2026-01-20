@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 
 export default function CustomerDashboard() {
   const [currentDate, setCurrentDate] = useState("");
+  const [location, setLocation] = useState("साकेत, दिल्ली");
 
   useEffect(() => {
     setCurrentDate(
@@ -26,6 +27,10 @@ export default function CustomerDashboard() {
         day: "numeric",
       })
     );
+    const savedLocation = localStorage.getItem("customerAddress");
+    if (savedLocation) {
+      setLocation(savedLocation);
+    }
   }, []);
 
   return (
@@ -34,7 +39,7 @@ export default function CustomerDashboard() {
         {/* Header Section */}
         <div className="space-y-1">
           <h1 className="text-2xl font-bold font-headline">नमस्ते रवि जी!</h1>
-          <p className="text-muted-foreground">{currentDate} | 📍 साकेत, दिल्ली</p>
+          <p className="text-muted-foreground">{currentDate} | 📍 {location}</p>
         </div>
 
         {/* Search Section */}
