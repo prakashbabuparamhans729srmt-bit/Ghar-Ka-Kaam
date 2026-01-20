@@ -6,6 +6,7 @@ import { z } from "zod";
 import { ArrowLeft, LocateIcon, LogIn } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -34,6 +43,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { Label } from "@/components/ui/label";
 
 const services = [
   { id: "plumbing", label: "प्लंबिंग" },
@@ -56,6 +66,9 @@ const formSchema = z.object({
 export default function CustomerRegistration() {
   const router = useRouter();
   const { toast } = useToast();
+  const [showOtpDialog, setShowOtpDialog] = useState(false);
+  const [otp, setOtp] = useState("");
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,8 +80,30 @@ export default function CustomerRegistration() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     localStorage.setItem("customerAddress", values.address);
-    router.push("/customer/dashboard");
+    setShowOtpDialog(true);
+    toast({
+        title: "OTP भेजा गया",
+        description: "आपके मोबाइल नंबर पर एक OTP भेजा गया है।",
+    });
   }
+
+  const handleOtpVerify = () => {
+    // Using a dummy OTP for demonstration
+    if (otp === "1234") {
+        toast({
+            title: "पंजीकरण सफल!",
+            description: "घर का काम में आपका स्वागत है।",
+            variant: "default",
+        });
+        router.push("/customer/dashboard");
+    } else {
+        toast({
+            title: "गलत OTP",
+            description: "कृपया सही OTP दर्ज करें।",
+            variant: "destructive",
+        });
+    }
+  };
 
   const handleLocateMe = () => {
     if (navigator.geolocation) {
@@ -101,140 +136,170 @@ export default function CustomerRegistration() {
   };
 
   return (
-    <Card className="w-full max-w-lg shadow-2xl">
-      <CardHeader>
-        <div className="flex items-center gap-4">
-            <Button variant="outline" size="icon" asChild>
-                <Link href="/"><ArrowLeft className="h-4 w-4" /></Link>
-            </Button>
-            <CardTitle className="font-headline text-xl">📱 ग्राहक पंजीकरण</CardTitle>
-        </div>
-        <CardDescription>अपना खाता बनाएं और सेवाओं का लाभ उठाएं।</CardDescription>
-      </CardHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="grid gap-6">
-            <FormField
-              control={form.control}
-              name="mobile"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>📱 मोबाइल नंबर:</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">+91</span>
-                      <Input placeholder="9876543210" className="pl-10" {...field} />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>📍 आपका पता:</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <Input placeholder="मैन्युअल दर्ज करें" {...field} />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2"
-                        onClick={handleLocateMe}
-                      >
-                        <LocateIcon className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="houseType"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>🏠 घर का प्रकार:</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <>
+      <Card className="w-full max-w-lg shadow-2xl">
+        <CardHeader>
+          <div className="flex items-center gap-4">
+              <Button variant="outline" size="icon" asChild>
+                  <Link href="/"><ArrowLeft className="h-4 w-4" /></Link>
+              </Button>
+              <CardTitle className="font-headline text-xl">📱 ग्राहक पंजीकरण</CardTitle>
+          </div>
+          <CardDescription>अपना खाता बनाएं और सेवाओं का लाभ उठाएं।</CardDescription>
+        </CardHeader>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <CardContent className="grid gap-6">
+              <FormField
+                control={form.control}
+                name="mobile"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>📱 मोबाइल नंबर:</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="एक प्रकार चुनें" />
-                      </SelectTrigger>
+                      <div className="relative">
+                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">+91</span>
+                        <Input placeholder="9876543210" className="pl-10" {...field} />
+                      </div>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="apartment">अपार्टमेंट</SelectItem>
-                      <SelectItem value="independent">इंडिपेंडेंट हाउस</SelectItem>
-                      <SelectItem value="villa">विला</SelectItem>
-                      <SelectItem value="office">ऑफिस</SelectItem>
-                      <SelectItem value="commercial">कॉमर्शियल प्रॉपर्टी</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="services"
-              render={() => (
-                <FormItem>
-                  <FormLabel>🎯 पसंदीदा सेवाएँ:</FormLabel>
-                  <div className="grid grid-cols-2 gap-4 rounded-md border p-4">
-                    {services.map((item) => (
-                      <FormField
-                        key={item.id}
-                        control={form.control}
-                        name="services"
-                        render={({ field }) => {
-                          return (
-                            <FormItem
-                              key={item.id}
-                              className="flex flex-row items-start space-x-3 space-y-0"
-                            >
-                              <FormControl>
-                                <Checkbox
-                                  checked={field.value?.includes(item.id)}
-                                  onCheckedChange={(checked) => {
-                                    return checked
-                                      ? field.onChange([...(field.value || []), item.id])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== item.id
-                                          )
-                                        );
-                                  }}
-                                />
-                              </FormControl>
-                              <FormLabel className="font-normal">
-                                {item.label}
-                              </FormLabel>
-                            </FormItem>
-                          );
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter className="flex flex-col gap-4">
-            <Button type="submit" className="w-full">OTP भेजें</Button>
-            <Button variant="outline" className="w-full">
-              <LogIn className="mr-2 h-4 w-4" /> Google से लॉगिन
-            </Button>
-          </CardFooter>
-        </form>
-      </Form>
-    </Card>
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>📍 आपका पता:</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input placeholder="मैन्युअल दर्ज करें" {...field} />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2"
+                          onClick={handleLocateMe}
+                        >
+                          <LocateIcon className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="houseType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>🏠 घर का प्रकार:</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="एक प्रकार चुनें" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="apartment">अपार्टमेंट</SelectItem>
+                        <SelectItem value="independent">इंडिपेंडेंट हाउस</SelectItem>
+                        <SelectItem value="villa">विला</SelectItem>
+                        <SelectItem value="office">ऑफिस</SelectItem>
+                        <SelectItem value="commercial">कॉमर्शियल प्रॉपर्टी</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="services"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>🎯 पसंदीदा सेवाएँ:</FormLabel>
+                    <div className="grid grid-cols-2 gap-4 rounded-md border p-4">
+                      {services.map((item) => (
+                        <FormField
+                          key={item.id}
+                          control={form.control}
+                          name="services"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={item.id}
+                                className="flex flex-row items-start space-x-3 space-y-0"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    checked={field.value?.includes(item.id)}
+                                    onCheckedChange={(checked) => {
+                                      return checked
+                                        ? field.onChange([...(field.value || []), item.id])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) => value !== item.id
+                                            )
+                                          );
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  {item.label}
+                                </FormLabel>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </CardContent>
+            <CardFooter className="flex flex-col gap-4">
+              <Button type="submit" className="w-full">OTP भेजें</Button>
+              <Button variant="outline" className="w-full">
+                <LogIn className="mr-2 h-4 w-4" /> Google से लॉगिन
+              </Button>
+            </CardFooter>
+          </form>
+        </Form>
+      </Card>
+      <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>OTP वेरीफाई करें</DialogTitle>
+            <DialogDescription>
+              आपके मोबाइल नंबर पर भेजे गए 4 अंकों का OTP दर्ज करें।
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="otp" className="text-right sr-only">
+                OTP
+              </Label>
+              <Input
+                id="otp"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                maxLength={4}
+                placeholder="1234"
+                className="col-span-4 text-center tracking-[1rem]"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={handleOtpVerify} className="w-full">वेरीफाई करें</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
