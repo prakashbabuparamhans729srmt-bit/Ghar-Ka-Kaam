@@ -33,6 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/hooks/use-toast";
 
 const services = [
   { id: "plumbing", label: "प्लंबिंग" },
@@ -54,6 +55,7 @@ const formSchema = z.object({
 
 export default function CustomerRegistration() {
   const router = useRouter();
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,6 +69,34 @@ export default function CustomerRegistration() {
     console.log(values);
     router.push("/customer/dashboard");
   }
+
+  const handleLocateMe = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          form.setValue("address", "साकेत, दिल्ली (अनुमानित)");
+          toast({
+            title: "लोकेशन मिल गई!",
+            description: "हमने आपकी लोकेशन का अनुमान लगा लिया है।",
+          });
+        },
+        () => {
+          toast({
+            title: "लोकेशन नहीं मिली",
+            description:
+              "आपकी लोकेशन का पता नहीं लगा सके। कृपया मैन्युअल रूप से दर्ज करें।",
+            variant: "destructive",
+          });
+        }
+      );
+    } else {
+      toast({
+        title: "लोकेशन सपोर्ट नहीं है",
+        description: "आपके ब्राउज़र में जियोलोकेशन सपोर्ट नहीं है।",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <Card className="w-full max-w-lg shadow-2xl">
@@ -108,8 +138,14 @@ export default function CustomerRegistration() {
                   <FormControl>
                     <div className="relative">
                       <Input placeholder="मैन्युअल दर्ज करें" {...field} />
-                      <Button variant="ghost" size="icon" className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2">
-                          <LocateIcon className="h-4 w-4" />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2"
+                        onClick={handleLocateMe}
+                      >
+                        <LocateIcon className="h-4 w-4" />
                       </Button>
                     </div>
                   </FormControl>
