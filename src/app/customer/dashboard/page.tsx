@@ -1,26 +1,32 @@
+"use client";
+
 import Link from "next/link";
 import { Search, Star } from "lucide-react";
 import { serviceCategories, topProviders } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
 export default function CustomerDashboard() {
-  const currentDate = new Date().toLocaleDateString("hi-IN", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    setCurrentDate(
+      new Date().toLocaleDateString("hi-IN", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    );
+  }, []);
 
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
