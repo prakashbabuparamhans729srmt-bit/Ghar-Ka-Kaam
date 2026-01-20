@@ -159,5 +159,7 @@
     "ai_verification_unavailable": "AI सत्यापन उपलब्ध नहीं है क्योंकि API कुंजी सेट नहीं है।",
     "didnt_receive_code": "कोड नहीं मिला?",
     "resend_otp": "फिर से भेजें",
-    "logout": "लॉग आउट"
+    "logout": "लॉग आउट",
+    "search_no_results_title": "कोई परिणाम नहीं मिला",
+    "search_no_results_description": "'{query}' के लिए कोई सेवा नहीं मिली।"
 }

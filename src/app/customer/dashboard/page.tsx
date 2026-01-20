@@ -5,6 +5,7 @@ import { Search, Star } from "lucide-react";
 import { getServiceCategories, getTopProviders } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -14,14 +15,18 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useLanguage } from "@/context/language-context";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CustomerDashboard() {
   const { t, locale } = useLanguage();
   const serviceCategories = getServiceCategories(t);
   const topProviders = getTopProviders(t);
+  const router = useRouter();
+  const { toast } = useToast();
   
   const [currentDate, setCurrentDate] = useState("");
   const [location, setLocation] = useState("साकेत, दिल्ली");
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     setCurrentDate(
@@ -38,6 +43,27 @@ export default function CustomerDashboard() {
     }
   }, [locale]);
 
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const query = searchQuery.toLowerCase().trim();
+      if (!query) return;
+      
+      const matchedService = serviceCategories.find(service => 
+        service.name.toLowerCase().includes(query)
+      );
+
+      if (matchedService) {
+        router.push(matchedService.href);
+      } else {
+        toast({
+          title: t('search_no_results_title'),
+          description: t('search_no_results_description', { query: searchQuery }),
+          variant: "default",
+        });
+      }
+    }
+  };
+
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
       <div className="space-y-4">
@@ -53,6 +79,9 @@ export default function CustomerDashboard() {
           <Input
             placeholder={t('customerDashboard_searchPlaceholder')}
             className="w-full rounded-full bg-muted pl-10 py-6 text-base"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleSearch}
           />
         </div>
 

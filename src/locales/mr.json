@@ -159,5 +159,7 @@
     "ai_verification_unavailable": "AI verification is not available because the API key is not set.",
     "didnt_receive_code": "Didn't receive the code?",
     "resend_otp": "Resend OTP",
-    "logout": "Logout"
+    "logout": "Logout",
+    "search_no_results_title": "No Results Found",
+    "search_no_results_description": "No service found for '{query}'."
 }
