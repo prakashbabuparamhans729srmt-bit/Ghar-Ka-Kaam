@@ -1,4 +1,4 @@
-import { ArrowLeft, User, Phone, Tool } from "lucide-react";
+import { ArrowLeft, User, Globe } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -30,7 +30,15 @@ export default function ProviderProfilePage() {
                 <p className="text-muted-foreground">{providerService}</p>
             </div>
             <Badge variant="outline">सत्यापित</Badge>
-            <Button variant="outline" className="mt-4">प्रोफाइल संपादित करें</Button>
+            <div className="flex flex-wrap justify-center gap-4 mt-4">
+              <Button variant="outline">प्रोफाइल संपादित करें</Button>
+              <Button variant="outline" asChild>
+                <Link href="/settings/language">
+                  <Globe className="mr-2 h-4 w-4" />
+                  भाषा बदलें
+                </Link>
+              </Button>
+            </div>
         </CardContent>
       </Card>
     </div>

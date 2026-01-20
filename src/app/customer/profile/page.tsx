@@ -1,7 +1,9 @@
-import { ArrowLeft, User, Phone, MapPin } from "lucide-react";
+'use client';
+
+import { ArrowLeft, User, Phone, MapPin, Globe } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function CustomerProfilePage() {
@@ -38,7 +40,15 @@ export default function CustomerProfilePage() {
                     <span>{customerAddress}</span>
                 </div>
             </div>
-            <Button variant="outline" className="mt-4">प्रोफाइल संपादित करें</Button>
+            <div className="flex flex-wrap justify-center gap-4 mt-4">
+              <Button variant="outline">प्रोफाइल संपादित करें</Button>
+              <Button variant="outline" asChild>
+                  <Link href="/settings/language">
+                      <Globe className="mr-2 h-4 w-4" />
+                      भाषा बदलें
+                  </Link>
+              </Button>
+            </div>
         </CardContent>
       </Card>
     </div>
