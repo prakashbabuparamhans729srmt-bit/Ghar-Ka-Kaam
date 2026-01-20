@@ -65,7 +65,7 @@ export async function verifyProvider(input: VerifyProviderInput): Promise<Verify
   if (!aiFeaturesEnabled) {
     return {
       isValid: false,
-      reason: 'AI सत्यापन उपलब्ध नहीं है क्योंकि API कुंजी सेट नहीं है।',
+      reason: 'ai_verification_unavailable',
     };
   }
   return verifyProviderFlow(input);

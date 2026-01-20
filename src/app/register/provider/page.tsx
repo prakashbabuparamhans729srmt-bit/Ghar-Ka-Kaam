@@ -81,20 +81,20 @@ export default function ProviderRegistration() {
         toast({
           title: t('providerRegistration_aiVerificationSuccess'),
           description: t('providerRegistration_verifyMobile'),
-          variant: "default",
+          variant: 'default',
         });
       } else {
         toast({
-          title: formState.message,
-          description: formState.data.reason,
-          variant: "destructive",
+          title: t(formState.message),
+          description: t(formState.data.reason),
+          variant: 'destructive',
         });
       }
     } else if (formState.message) {
       toast({
         title: t('providerRegistration_error'),
-        description: formState.message,
-        variant: "destructive",
+        description: t(formState.message),
+        variant: 'destructive',
       });
     }
   }, [formState, toast, t]);
@@ -280,8 +280,8 @@ export default function ProviderRegistration() {
             {formState.data && !formState.data.isValid && (
               <Alert variant={"destructive"}>
                 <XCircle className="h-4 w-4" />
-                <AlertTitle>{formState.message}</AlertTitle>
-                <AlertDescription>{formState.data.reason}</AlertDescription>
+                <AlertTitle>{t(formState.message)}</AlertTitle>
+                <AlertDescription>{t(formState.data.reason)}</AlertDescription>
               </Alert>
             )}
           </CardContent>

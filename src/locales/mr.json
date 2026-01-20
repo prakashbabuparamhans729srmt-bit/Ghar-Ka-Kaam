@@ -10,7 +10,6 @@
     "partner_tagline": "I am a tool/material supplier",
     "continue": "Continue",
     "view_as_guest": "View as Guest",
-
     "customerRegistration_title": "Customer Registration",
     "customerRegistration_description": "Create your account and avail services.",
     "customerRegistration_mobileLabel": "Mobile Number:",
@@ -29,7 +28,6 @@
     "customerRegistration_preferredServicesError": "You must select at least one service.",
     "customerRegistration_sendOtp": "Send OTP",
     "customerRegistration_loginWithGoogle": "Login with Google",
-
     "otp_sent_title": "OTP Sent",
     "otp_sent_description": "An OTP has been sent to your mobile number.",
     "registration_success_title": "Registration Successful!",
@@ -42,35 +40,28 @@
     "location_not_found_description": "Could not detect your location. Please enter manually.",
     "location_unsupported_title": "Location Not Supported",
     "location_unsupported_description": "Geolocation is not supported in your browser.",
-
     "otp_verify_title": "Verify OTP",
     "otp_verify_description": "Enter the 4-digit OTP sent to your mobile number.",
     "otp_placeholder": "1234",
     "verify": "Verify",
-
     "customerDashboard_greeting": "Hello Ravi ji!",
     "customerDashboard_searchPlaceholder": "What do you need? e.g. fix tap, cleaning...",
     "customerDashboard_quickServices": "⚡ Quick Services",
     "customerDashboard_topRatedProviders": "🏆 Top Rated Providers",
-    
     "provider_startingAt": "Starts at",
     "book_now": "Book Now",
-
     "customerLayout_bookings": "Bookings",
     "customerLayout_home": "Home",
     "customerLayout_profile": "Profile",
     "toggle_notifications": "Toggle notifications",
     "toggle_user_menu": "Toggle user menu",
-
     "my_bookings": "My Bookings",
     "no_bookings": "You don't have any bookings.",
     "notifications": "Notifications",
     "no_notifications": "You have no new notifications.",
-
     "my_profile": "My Profile",
     "edit_profile": "Edit Profile",
     "settings": "Settings",
-
     "serviceProviders_pageTitle": "{serviceName}",
     "serviceProviders_pageSubtitle": "Providers available in your area",
     "service_not_found": "Service Not Found",
@@ -81,7 +72,6 @@
     "ai_recommended": "⭐ AI Recommended",
     "booking_confirmed_title": "Booking Confirmed!",
     "booking_confirmed_description": "Your request has been sent to {providerName}.",
-    
     "providerDashboard_greeting": "Hello, Ram Singh!",
     "providerDashboard_subtitle": "Have a great day.",
     "providerDashboard_todayEarnings": "Today's Earnings",
@@ -100,21 +90,16 @@
     "time_ago_hours": "{time} hours ago",
     "reject": "Reject",
     "accept_offer": "Accept (₹{amount})",
-
     "my_earnings": "My Earnings",
     "no_earnings_data": "Earnings data is not available yet.",
-
     "my_jobs": "My Jobs",
     "no_active_jobs": "You have no active jobs.",
-    
     "providerLayout_dashboard": "Dashboard",
     "providerLayout_jobs": "Jobs",
     "providerLayout_earnings": "Earnings",
     "providerLayout_profile": "Profile",
     "providerDashboard_title": "Provider Dashboard",
-
     "providerProfile_verified": "Verified",
-
     "providerRegistration_title": "Service Provider Registration",
     "providerRegistration_description": "Join us and increase your earnings.",
     "providerRegistration_nameLabel": "Name",
@@ -138,19 +123,15 @@
     "providerRegistration_aiVerificationSuccess": "AI verification successful!",
     "providerRegistration_verifyMobile": "Now please verify your mobile number with OTP.",
     "providerRegistration_error": "Error",
-
     "languageSettings_title": "Select Language",
     "languageSettings_updatedTitle": "Language Updated!",
     "languageSettings_updatedDescription": "The app language is now {langName}.",
-
     "settings_title": "Settings",
     "settings_language": "Language",
-    
     "chatbot_greeting": "Hello! I am Kaam-Bot. How can I help you?",
     "chatbot_placeholder": "Ask your question...",
     "chatbot_title": "Kaam-Bot",
     "chatbot_error": "Sorry, something went wrong. Please try again later.",
-
     "service_plumbing": "Plumbing",
     "service_electrical": "Electrical",
     "service_cleaning": "Cleaning",
@@ -159,16 +140,21 @@
     "service_carpenter": "Carpenter",
     "service_furniture": "Furniture",
     "service_tv": "TV",
-
     "work_area_5km": "5km Radius",
     "work_area_10km": "10km Radius",
     "work_area_full_city": "Full City",
     "work_area_multi_city": "Multi-City",
-
     "certificate_iti": "ITI",
     "certificate_govt": "Government",
     "certificate_training": "Training",
     "certificate_other": "Other",
-
-    "multi_skill": "Multi-skill"
+    "multi_skill": "Multi-skill",
+    "validation_mobile_10_digits": "Please enter a 10-digit mobile number.",
+    "validation_address_required": "Please enter your address.",
+    "validation_houseType_required": "Please select a house type.",
+    "form_invalid": "Form is invalid. Please fill all required fields.",
+    "ai_verification_failed": "AI verification failed",
+    "verification_successful": "Verification successful!",
+    "verification_error": "An error occurred during verification.",
+    "ai_verification_unavailable": "AI verification is not available because the API key is not set."
 }

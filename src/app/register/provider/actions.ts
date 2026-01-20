@@ -36,7 +36,7 @@ export async function onRegister(
   if (!parsed.success) {
     const issues = parsed.error.issues.map((issue) => issue.message);
     return {
-      message: "फॉर्म अमान्य है।",
+      message: "form_invalid",
       issues,
     };
   }
@@ -45,17 +45,17 @@ export async function onRegister(
     const result = await verifyProvider(parsed.data);
     if (!result.isValid) {
       return {
-        message: "AI सत्यापन विफल",
+        message: "ai_verification_failed",
         data: result,
       };
     }
     return {
-      message: "सत्यापन सफल!",
+      message: "verification_successful",
       data: result,
     };
   } catch (e) {
     return {
-      message: "सत्यापन के दौरान एक त्रुटि हुई।",
+      message: "verification_error",
     };
   }
 }

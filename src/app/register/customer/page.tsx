@@ -44,15 +44,15 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
-import { useLanguage } from "@/context/language-context";
+import { useLanguage, type TFunction } from "@/context/language-context";
 import { getServiceCategories } from "@/lib/data";
 
-const formSchema = z.object({
-  mobile: z.string().min(10, { message: "कृपया 10 अंकों का मोबाइल नंबर दर्ज करें।" }),
-  address: z.string().min(1, { message: "कृपया अपना पता दर्ज करें।" }),
-  houseType: z.string({ required_error: "कृपया घर का प्रकार चुनें।" }),
+const getFormSchema = (t: TFunction) => z.object({
+  mobile: z.string().min(10, { message: t('validation_mobile_10_digits') }),
+  address: z.string().min(1, { message: t('validation_address_required') }),
+  houseType: z.string({ required_error: t('validation_houseType_required') }),
   services: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "आपको कम से-कम एक सेवा चुननी होगी।",
+    message: t('customerRegistration_preferredServicesError'),
   }),
 });
 
@@ -64,6 +64,8 @@ export default function CustomerRegistration() {
   
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const [otp, setOtp] = useState("");
+
+  const formSchema = getFormSchema(t);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

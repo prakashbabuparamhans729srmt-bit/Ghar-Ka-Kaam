@@ -15,6 +15,7 @@ import paTranslations from '@/locales/pa.json';
 import mlTranslations from '@/locales/ml.json';
 
 export type Locale = 'hi' | 'en' | 'bn' | 'mr' | 'te' | 'ta' | 'gu' | 'kn' | 'pa' | 'ml';
+export type TFunction = (key: string, params?: Record<string, string | number>) => string;
 
 const translations: Record<Locale, any> = {
   hi: hiTranslations,
@@ -32,7 +33,7 @@ const translations: Record<Locale, any> = {
 interface LanguageContextType {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: (key: string, params?: Record<string, string | number>) => string;
+  t: TFunction;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
