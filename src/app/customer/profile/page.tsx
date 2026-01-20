@@ -7,13 +7,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useLanguage } from "@/context/language-context";
 import { useAuth } from "@/context/auth-context";
+import { useEffect, useState } from "react";
 
 export default function CustomerProfilePage() {
     const { t } = useLanguage();
     const { logout } = useAuth();
     const customerName = "रवि जी";
     const customerMobile = "+91 9876543210";
-    const customerAddress = "साकेत, दिल्ली";
+    const [customerAddress, setCustomerAddress] = useState("साकेत, दिल्ली");
+
+    useEffect(() => {
+        const savedAddress = localStorage.getItem("customerAddress");
+        if (savedAddress) {
+            setCustomerAddress(savedAddress);
+        }
+    }, []);
 
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
