@@ -41,8 +41,8 @@
     "location_unsupported_title": "Location Not Supported",
     "location_unsupported_description": "Geolocation is not supported in your browser.",
     "otp_verify_title": "Verify OTP",
-    "otp_verify_description": "Enter the 4-digit OTP sent to your mobile number.",
-    "otp_placeholder": "1234",
+    "otp_verify_description": "Enter the 6-digit OTP sent to your mobile number.",
+    "otp_placeholder": "123456",
     "verify": "Verify",
     "customerDashboard_greeting": "Hello Ravi ji!",
     "customerDashboard_searchPlaceholder": "What do you need? e.g. fix tap, cleaning...",
@@ -156,5 +156,7 @@
     "ai_verification_failed": "AI verification failed",
     "verification_successful": "Verification successful!",
     "verification_error": "An error occurred during verification.",
-    "ai_verification_unavailable": "AI verification is not available because the API key is not set."
+    "ai_verification_unavailable": "AI verification is not available because the API key is not set.",
+    "didnt_receive_code": "Didn't receive the code?",
+    "resend_otp": "Resend OTP"
 }

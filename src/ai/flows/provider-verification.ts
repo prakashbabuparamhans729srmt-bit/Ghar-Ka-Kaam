@@ -43,7 +43,7 @@ if (aiFeaturesEnabled) {
   Certifications: {{#each certifications}}- {{{this}}}\n{{/each}}
   Documents: {{#each documents}}{{media url=this}}\n{{/each}}
 
-  Based on the information provided, determine whether the service provider is valid or not. If the service provider is not valid, provide a reason.
+  Based on the information provided, determine whether the service provider is valid or not. If the service provider is not valid, provide a reason. A provider is only valid if they have provided at least one document.
 `,
   });
 

@@ -41,8 +41,8 @@
     "location_unsupported_title": "लोकेशन सपोर्ट नहीं है",
     "location_unsupported_description": "आपके ब्राउज़र में जियोलोकेशन सपोर्ट नहीं है।",
     "otp_verify_title": "OTP वेरीफाई करें",
-    "otp_verify_description": "आपके मोबाइल नंबर पर भेजे गए 4 अंकों का OTP दर्ज करें।",
-    "otp_placeholder": "1234",
+    "otp_verify_description": "आपके मोबाइल नंबर पर भेजे गए 6 अंकों का OTP दर्ज करें।",
+    "otp_placeholder": "123456",
     "verify": "वेरीफाई करें",
     "customerDashboard_greeting": "नमस्ते रवि जी!",
     "customerDashboard_searchPlaceholder": "क्या करवाना है? जैसे नल ठीक करवाना, सफाई...",
@@ -156,5 +156,7 @@
     "ai_verification_failed": "AI सत्यापन विफल",
     "verification_successful": "सत्यापन सफल!",
     "verification_error": "सत्यापन के दौरान एक त्रुटि हुई।",
-    "ai_verification_unavailable": "AI सत्यापन उपलब्ध नहीं है क्योंकि API कुंजी सेट नहीं है।"
+    "ai_verification_unavailable": "AI सत्यापन उपलब्ध नहीं है क्योंकि API कुंजी सेट नहीं है।",
+    "didnt_receive_code": "कोड नहीं मिला?",
+    "resend_otp": "फिर से भेजें"
 }

@@ -9,6 +9,7 @@ const formSchema = z.object({
   certifications: z.array(z.string()),
   workArea: z.string(),
   name: z.string(),
+  mobile: z.string().min(10, { message: "validation_mobile_10_digits" }),
   documents: z.array(z.string()),
 });
 
@@ -40,9 +41,12 @@ export async function onRegister(
       issues,
     };
   }
+  
+  // We remove mobile from data sent to AI verification
+  const { mobile, ...aiData } = parsed.data;
 
   try {
-    const result = await verifyProvider(parsed.data);
+    const result = await verifyProvider(aiData);
     if (!result.isValid) {
       return {
         message: "ai_verification_failed",
