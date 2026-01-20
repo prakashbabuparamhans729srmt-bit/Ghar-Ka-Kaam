@@ -40,7 +40,7 @@ export default function LanguageSettingsPage() {
        <div className="flex items-center gap-4 mb-6">
         <Button variant="outline" size="icon" onClick={() => router.back()}>
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">Back</span>
+            <span className="sr-only">वापस</span>
         </Button>
         <h1 className="text-2xl font-bold font-headline">भाषा चुनें</h1>
       </div>
