@@ -2,14 +2,15 @@
 
 import { AlertTriangle, MapPin, Star, Clock } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
 import { useLanguage } from "@/context/language-context";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
-const jobRequests = [
+const initialJobRequests = [
   {
     id: 1,
     service: "गीज़र की मरम्मत",
@@ -41,6 +42,30 @@ const jobRequests = [
 
 export default function ProviderDashboard() {
   const { t } = useLanguage();
+  const { toast } = useToast();
+  const [jobRequests, setJobRequests] = useState(initialJobRequests);
+
+  const handleJobAction = (jobId: number, action: 'accept' | 'reject') => {
+    const job = jobRequests.find(j => j.id === jobId);
+    if (!job) return;
+
+    setJobRequests(prevJobs => prevJobs.filter(j => j.id !== jobId));
+    
+    if (action === 'accept') {
+        toast({
+            title: t('providerDashboard_jobAcceptedTitle'),
+            description: t('providerDashboard_jobAcceptedDescription', { customer: job.customer }),
+            variant: 'default'
+        });
+    } else {
+        toast({
+            title: t('providerDashboard_jobRejectedTitle'),
+            description: t('providerDashboard_jobRejectedDescription', { customer: job.customer }),
+            variant: 'destructive'
+        });
+    }
+  };
+
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
       <div className="space-y-6">
@@ -100,7 +125,13 @@ export default function ProviderDashboard() {
         <section className="space-y-4">
           <h2 className="text-xl font-bold font-headline">{t('providerDashboard_newJobRequests')}</h2>
            <div className="grid gap-4">
-            {jobRequests.map((job) => (
+            {jobRequests.length === 0 ? (
+                 <Card>
+                    <CardContent className="p-6 text-center">
+                        <p className="text-muted-foreground">{t('providerDashboard_noNewJobs')}</p>
+                    </CardContent>
+                </Card>
+            ) : jobRequests.map((job) => (
                 <Card key={job.id}>
                     <CardContent className="p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                          <Avatar className="h-12 w-12 hidden sm:flex">
@@ -115,14 +146,14 @@ export default function ProviderDashboard() {
                                 </Avatar>
                                 <p className="font-bold">{job.service}</p>
                             </div>
-                            <div className="text-sm text-muted-foreground flex items-center gap-4">
+                            <div className="text-sm text-muted-foreground flex items-center gap-4 flex-wrap">
                                 <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {job.location} ({job.distance})</span>
                                 <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {job.time}</span>
                             </div>
                         </div>
                         <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0">
-                            <Button variant="outline" className="flex-1">{t('reject')}</Button>
-                            <Button className="flex-1">{t('accept_offer', {amount: 450})}</Button>
+                            <Button variant="outline" className="flex-1" onClick={() => handleJobAction(job.id, 'reject')}>{t('reject')}</Button>
+                            <Button className="flex-1" onClick={() => handleJobAction(job.id, 'accept')}>{t('accept_offer', {amount: 450})}</Button>
                         </div>
                     </CardContent>
                 </Card>

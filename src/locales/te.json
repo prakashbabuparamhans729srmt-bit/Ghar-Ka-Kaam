@@ -29,7 +29,7 @@
     "customerRegistration_sendOtp": "Send OTP",
     "customerRegistration_loginWithGoogle": "Login with Google",
     "otp_sent_title": "OTP Sent",
-    "otp_sent_description": "An OTP has been sent to your mobile number.",
+    "otp_sent_description": "An OTP has been sent to your mobile number ({mobile}).",
     "registration_success_title": "Registration Successful!",
     "registration_success_description": "Welcome to Ghar Ka Kaam.",
     "wrong_otp_title": "Wrong OTP",
@@ -161,5 +161,10 @@
     "resend_otp": "Resend OTP",
     "logout": "Logout",
     "search_no_results_title": "No Results Found",
-    "search_no_results_description": "No service found for '{query}'."
+    "search_no_results_description": "No service found for '{query}'.",
+    "providerDashboard_jobAcceptedTitle": "Job Accepted!",
+    "providerDashboard_jobAcceptedDescription": "You have accepted the job request from {customer}.",
+    "providerDashboard_jobRejectedTitle": "Job Rejected",
+    "providerDashboard_jobRejectedDescription": "You have rejected the job request from {customer}.",
+    "providerDashboard_noNewJobs": "No new job requests."
 }
