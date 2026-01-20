@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, User, Phone, MapPin, Globe } from "lucide-react";
+import { ArrowLeft, User, Phone, MapPin, Settings } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -43,9 +43,9 @@ export default function CustomerProfilePage() {
             <div className="flex flex-wrap justify-center gap-4 mt-4">
               <Button variant="outline">प्रोफाइल संपादित करें</Button>
               <Button variant="outline" asChild>
-                  <Link href="/settings/language">
-                      <Globe className="mr-2 h-4 w-4" />
-                      भाषा बदलें
+                  <Link href="/settings">
+                      <Settings className="mr-2 h-4 w-4" />
+                      सेटिंग्स
                   </Link>
               </Button>
             </div>

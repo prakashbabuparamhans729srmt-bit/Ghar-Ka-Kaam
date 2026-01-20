@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import Link from "next/link";
 
 const languages = [
     { code: 'hi', name: 'हिंदी' },
@@ -38,9 +39,11 @@ export default function LanguageSettingsPage() {
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
        <div className="flex items-center gap-4 mb-6">
-        <Button variant="outline" size="icon" onClick={() => router.back()}>
+        <Button variant="outline" size="icon" asChild>
+          <Link href="/settings">
             <ArrowLeft className="h-4 w-4" />
             <span className="sr-only">वापस</span>
+          </Link>
         </Button>
         <h1 className="text-2xl font-bold font-headline">भाषा चुनें</h1>
       </div>
