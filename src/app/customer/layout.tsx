@@ -33,7 +33,7 @@ export default function CustomerLayout({
       </header>
       <main className="flex-1">{children}</main>
       <footer className="sticky bottom-0 z-10 border-t bg-background/95 p-2 backdrop-blur-sm md:hidden">
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-3 gap-2">
             <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="#">
                     <ListChecks className="h-5 w-5" />
@@ -41,15 +41,9 @@ export default function CustomerLayout({
                 </Link>
             </Button>
             <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
-                <Link href="#">
+                <Link href="/customer/dashboard">
                     <Home className="h-5 w-5" />
                     <span>होम</span>
-                </Link>
-            </Button>
-            <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
-                <Link href="#">
-                    <MessageSquare className="h-5 w-5" />
-                    <span>चैट</span>
                 </Link>
             </Button>
              <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>

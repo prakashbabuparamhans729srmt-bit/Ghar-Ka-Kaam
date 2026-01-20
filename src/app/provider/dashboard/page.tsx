@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Link from "next/link";
 
 const jobRequests = [
   {
@@ -87,7 +88,9 @@ export default function ProviderDashboard() {
             <AlertTitle>प्रोफाइल वेरिफिकेशन लंबित है</AlertTitle>
             <AlertDescription>
                 आपकी कमाई को अनलॉक करने के लिए कृपया अपनी प्रोफ़ाइल पूरी करें और दस्तावेज़ सत्यापित करें।
-                <Button variant="link" className="p-0 h-auto ml-2">अभी पूरा करें</Button>
+                <Button variant="link" className="p-0 h-auto ml-2" asChild>
+                  <Link href="/register/provider">अभी पूरा करें</Link>
+                </Button>
             </AlertDescription>
         </Alert>
 
