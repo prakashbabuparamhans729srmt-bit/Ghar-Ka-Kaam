@@ -159,5 +159,19 @@
     "providerDashboard_jobAcceptedDescription": "You have accepted the job request from {customer}.",
     "providerDashboard_jobRejectedTitle": "Job Rejected",
     "providerDashboard_jobRejectedDescription": "You have rejected the job request from {customer}.",
-    "providerDashboard_noNewJobs": "No new job requests."
+    "providerDashboard_noNewJobs": "No new job requests.",
+    "booking_id": "Booking ID",
+    "date": "Date",
+    "earnings_weekly": "Weekly Earnings",
+    "earnings_last_7_days": "from last 7 days",
+    "earnings_total_payout": "Total Payout",
+    "earnings_lifetime": "Lifetime earnings",
+    "earnings_weekly_overview": "Weekly Overview",
+    "earnings_this_week_summary": "A summary of your earnings this week.",
+    "earnings_recent_transactions": "Recent Transactions",
+    "jobs_active": "Active",
+    "jobs_completed": "Completed",
+    "jobs_start_job": "Start Job",
+    "jobs_contact_customer": "Contact Customer",
+    "no_completed_jobs": "No completed jobs."
 }

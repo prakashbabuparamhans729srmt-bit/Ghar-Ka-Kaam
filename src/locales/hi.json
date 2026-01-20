@@ -159,5 +159,19 @@
     "providerDashboard_jobAcceptedDescription": "आपने {customer} की जॉब रिक्वेस्ट स्वीकार कर ली है।",
     "providerDashboard_jobRejectedTitle": "जॉब अस्वीकार की गई",
     "providerDashboard_jobRejectedDescription": "आपने {customer} की जॉब रिक्वेस्ट अस्वीकार कर दी है।",
-    "providerDashboard_noNewJobs": "कोई नई जॉब रिक्वेस्ट नहीं है।"
+    "providerDashboard_noNewJobs": "कोई नई जॉब रिक्वेस्ट नहीं है।",
+    "booking_id": "बुकिंग आईडी",
+    "date": "तारीख",
+    "earnings_weekly": "साप्ताहिक कमाई",
+    "earnings_last_7_days": "पिछले 7 दिनों से",
+    "earnings_total_payout": "कुल भुगतान",
+    "earnings_lifetime": "अब तक की कुल कमाई",
+    "earnings_weekly_overview": "साप्ताहिक अवलोकन",
+    "earnings_this_week_summary": "इस हफ्ते आपकी कमाई का सारांश।",
+    "earnings_recent_transactions": "हाल के लेन-देन",
+    "jobs_active": "सक्रिय",
+    "jobs_completed": "पूर्ण",
+    "jobs_start_job": "जॉब शुरू करें",
+    "jobs_contact_customer": "ग्राहक से संपर्क करें",
+    "no_completed_jobs": "कोई पूर्ण जॉब नहीं है।"
 }
