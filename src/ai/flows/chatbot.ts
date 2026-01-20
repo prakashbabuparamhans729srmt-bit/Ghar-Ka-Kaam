@@ -7,7 +7,7 @@
  * - ChatOutput - The return type for the chat function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, aiFeaturesEnabled} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const ChatInputSchema = z.object({
@@ -21,14 +21,13 @@ export type ChatInput = z.infer<typeof ChatInputSchema>;
 
 export type ChatOutput = string;
 
-export async function chat(input: ChatInput): Promise<ChatOutput> {
-  return chatFlow(input);
-}
+let chatFlow: (input: ChatInput) => Promise<ChatOutput>;
 
-const prompt = ai.definePrompt({
-  name: 'chatbotPrompt',
-  input: {schema: ChatInputSchema},
-  prompt: `You are "Kaam-Bot", a friendly and expert AI assistant for "Ghar Ka Kaam", a platform that connects customers with reliable home service providers. Your goal is to answer user questions about the platform, guide them, and help them use the services effectively.
+if (aiFeaturesEnabled) {
+  const prompt = ai.definePrompt({
+    name: 'chatbotPrompt',
+    input: {schema: ChatInputSchema},
+    prompt: `You are "Kaam-Bot", a friendly and expert AI assistant for "Ghar Ka Kaam", a platform that connects customers with reliable home service providers. Your goal is to answer user questions about the platform, guide them, and help them use the services effectively.
 
 **About Ghar Ka Kaam:**
 
@@ -77,19 +76,27 @@ user: {{{message}}}
 
 Generate the next response as the model.
 `,
-});
+  });
 
-const chatFlow = ai.defineFlow(
-  {
-    name: 'chatFlow',
-    inputSchema: ChatInputSchema,
-    outputSchema: z.string(),
-  },
-  async ({history, message}) => {
-    const response = await prompt({
-        history,
-        message,
-    });
-    return response.text;
+  chatFlow = ai.defineFlow(
+    {
+      name: 'chatFlow',
+      inputSchema: ChatInputSchema,
+      outputSchema: z.string(),
+    },
+    async ({history, message}) => {
+      const response = await prompt({
+          history,
+          message,
+      });
+      return response.text;
+    }
+  );
+}
+
+export async function chat(input: ChatInput): Promise<ChatOutput> {
+  if (!aiFeaturesEnabled) {
+    return 'माफ़ कीजिए, AI सेवा अभी उपलब्ध नहीं है क्योंकि API कुंजी सेट नहीं है।';
   }
-);
+  return chatFlow(input);
+}

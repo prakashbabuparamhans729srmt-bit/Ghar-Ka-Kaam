@@ -10,7 +10,7 @@
  * - VerifyProviderOutput - The return type for the verifyProvider function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, aiFeaturesEnabled} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const VerifyProviderInputSchema = z.object({
@@ -27,15 +27,14 @@ const VerifyProviderOutputSchema = z.object({
 });
 export type VerifyProviderOutput = z.infer<typeof VerifyProviderOutputSchema>;
 
-export async function verifyProvider(input: VerifyProviderInput): Promise<VerifyProviderOutput> {
-  return verifyProviderFlow(input);
-}
+let verifyProviderFlow: (input: VerifyProviderInput) => Promise<VerifyProviderOutput>;
 
-const prompt = ai.definePrompt({
-  name: 'verifyProviderPrompt',
-  input: {schema: VerifyProviderInputSchema},
-  output: {schema: VerifyProviderOutputSchema},
-  prompt: `You are an expert in verifying service providers.
+if (aiFeaturesEnabled) {
+  const prompt = ai.definePrompt({
+    name: 'verifyProviderPrompt',
+    input: {schema: VerifyProviderInputSchema},
+    output: {schema: VerifyProviderOutputSchema},
+    prompt: `You are an expert in verifying service providers.
 
   You will use the following information to determine whether the service provider is valid or not.
 
@@ -46,16 +45,28 @@ const prompt = ai.definePrompt({
 
   Based on the information provided, determine whether the service provider is valid or not. If the service provider is not valid, provide a reason.
 `,
-});
+  });
 
-const verifyProviderFlow = ai.defineFlow(
-  {
-    name: 'verifyProviderFlow',
-    inputSchema: VerifyProviderInputSchema,
-    outputSchema: VerifyProviderOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
+  verifyProviderFlow = ai.defineFlow(
+    {
+      name: 'verifyProviderFlow',
+      inputSchema: VerifyProviderInputSchema,
+      outputSchema: VerifyProviderOutputSchema,
+    },
+    async input => {
+      const {output} = await prompt(input);
+      return output!;
+    }
+  );
+}
+
+
+export async function verifyProvider(input: VerifyProviderInput): Promise<VerifyProviderOutput> {
+  if (!aiFeaturesEnabled) {
+    return {
+      isValid: false,
+      reason: 'AI सत्यापन उपलब्ध नहीं है क्योंकि API कुंजी सेट नहीं है।',
+    };
   }
-);
+  return verifyProviderFlow(input);
+}

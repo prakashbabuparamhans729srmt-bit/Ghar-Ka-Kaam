@@ -11,7 +11,7 @@
  * - FindBestProviderOutput - The return type for the findBestProvider function.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai, aiFeaturesEnabled} from '@/ai/genkit';
 import {z} from 'genkit';
 
 const FindBestProviderInputSchema = z.object({
@@ -38,15 +38,14 @@ const FindBestProviderOutputSchema = z.object({
 });
 export type FindBestProviderOutput = z.infer<typeof FindBestProviderOutputSchema>;
 
-export async function findBestProvider(input: FindBestProviderInput): Promise<FindBestProviderOutput> {
-  return findBestProviderFlow(input);
-}
+let findBestProviderFlow: (input: FindBestProviderInput) => Promise<FindBestProviderOutput>;
 
-const prompt = ai.definePrompt({
-  name: 'findBestProviderPrompt',
-  input: {schema: FindBestProviderInputSchema},
-  output: {schema: FindBestProviderOutputSchema},
-  prompt: `You are an AI assistant designed to find the best service provider for a customer, given their requirements and a list of available providers.
+if (aiFeaturesEnabled) {
+  const prompt = ai.definePrompt({
+    name: 'findBestProviderPrompt',
+    input: {schema: FindBestProviderInputSchema},
+    output: {schema: FindBestProviderOutputSchema},
+    prompt: `You are an AI assistant designed to find the best service provider for a customer, given their requirements and a list of available providers.
 
 Here's the customer's service request:
 Service Type: {{{serviceType}}}
@@ -70,16 +69,27 @@ Return only JSON. Make sure you return a valid JSON.
 Here is the schema for the output:
 ${JSON.stringify(FindBestProviderOutputSchema.describe)}
 `,
-});
+  });
 
-const findBestProviderFlow = ai.defineFlow(
-  {
-    name: 'findBestProviderFlow',
-    inputSchema: FindBestProviderInputSchema,
-    outputSchema: FindBestProviderOutputSchema,
-  },
-  async input => {
-    const {output} = await prompt(input);
-    return output!;
+  findBestProviderFlow = ai.defineFlow(
+    {
+      name: 'findBestProviderFlow',
+      inputSchema: FindBestProviderInputSchema,
+      outputSchema: FindBestProviderOutputSchema,
+    },
+    async input => {
+      const {output} = await prompt(input);
+      return output!;
+    }
+  );
+}
+
+export async function findBestProvider(input: FindBestProviderInput): Promise<FindBestProviderOutput> {
+  if (!aiFeaturesEnabled) {
+    return {
+      bestProviderId: '',
+      reason: 'AI मैचिंग उपलब्ध नहीं है क्योंकि API कुंजी सेट नहीं है।',
+    };
   }
-);
+  return findBestProviderFlow(input);
+}
