@@ -97,7 +97,7 @@ export default function RoleSelection() {
           <Button className="w-full" onClick={handleContinue}>
             जारी रखें
           </Button>
-          <Button variant="ghost" className="w-full">
+          <Button variant="ghost" className="w-full" onClick={() => router.push('/customer/dashboard')}>
             गेस्ट के रूप में देखें
           </Button>
         </CardFooter>
