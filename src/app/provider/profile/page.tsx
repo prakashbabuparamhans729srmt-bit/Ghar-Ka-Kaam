@@ -1,15 +1,17 @@
 'use client';
 
-import { ArrowLeft, User, Settings } from "lucide-react";
+import { ArrowLeft, User, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/context/language-context";
+import { useAuth } from "@/context/auth-context";
 
 export default function ProviderProfilePage() {
     const { t } = useLanguage();
+    const { logout } = useAuth();
     const providerName = "राम सिंह";
     const providerService = "प्लंबर";
 
@@ -41,6 +43,10 @@ export default function ProviderProfilePage() {
                   <Settings className="mr-2 h-4 w-4" />
                   {t('settings')}
                 </Link>
+              </Button>
+              <Button variant="destructive" onClick={() => logout()}>
+                <LogOut className="mr-2 h-4 w-4" />
+                {t('logout')}
               </Button>
             </div>
         </CardContent>

@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster"
 import { cn } from '@/lib/utils';
 import Chatbot from '@/components/chatbot';
 import { LanguageProvider } from '@/context/language-context';
+import { AuthProvider } from '@/context/auth-context';
 
 export const metadata: Metadata = {
   title: 'GharKaam',
@@ -23,11 +24,13 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className={cn("font-body antialiased")}>
-        <LanguageProvider>
-          {children}
-          <Toaster />
-          <Chatbot />
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            {children}
+            <Toaster />
+            <Chatbot />
+          </LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,10 +1,13 @@
 'use client';
 
-import { Bell, Home, ListChecks, User } from "lucide-react";
+import { Bell, Home, ListChecks, Loader2, User } from "lucide-react";
 import Link from "next/link";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/language-context";
+import { useAuth } from "@/context/auth-context";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function CustomerLayout({
   children,
@@ -12,6 +15,23 @@ export default function CustomerLayout({
   children: React.ReactNode;
 }) {
   const { t } = useLanguage();
+  const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      router.replace('/');
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  if (isLoading || !isAuthenticated) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">

@@ -158,5 +158,6 @@
     "verification_error": "An error occurred during verification.",
     "ai_verification_unavailable": "AI verification is not available because the API key is not set.",
     "didnt_receive_code": "Didn't receive the code?",
-    "resend_otp": "Resend OTP"
+    "resend_otp": "Resend OTP",
+    "logout": "Logout"
 }

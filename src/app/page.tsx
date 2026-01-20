@@ -99,9 +99,6 @@ export default function RoleSelection() {
           <Button className="w-full" onClick={handleContinue}>
             {t('continue')}
           </Button>
-          <Button variant="ghost" className="w-full" onClick={() => router.push('/customer/dashboard')}>
-            {t('view_as_guest')}
-          </Button>
         </CardFooter>
       </Card>
     </div>

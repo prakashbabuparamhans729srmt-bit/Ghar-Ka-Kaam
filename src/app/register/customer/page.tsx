@@ -38,6 +38,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
 import { useLanguage, type TFunction } from "@/context/language-context";
 import { getServiceCategories } from "@/lib/data";
+import { useAuth } from "@/context/auth-context";
 
 const getFormSchema = (t: TFunction) => z.object({
   mobile: z.string().min(10, { message: t('validation_mobile_10_digits') }),
@@ -52,6 +53,7 @@ export default function CustomerRegistration() {
   const router = useRouter();
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { login } = useAuth();
   const services = getServiceCategories(t);
   
   const [step, setStep] = useState<'details' | 'otp'>('details');
@@ -82,6 +84,7 @@ export default function CustomerRegistration() {
   const handleOtpVerify = () => {
     // Using a dummy OTP for demonstration
     if (otp === "123456") {
+        login();
         toast({
             title: t('registration_success_title'),
             description: t('registration_success_description'),

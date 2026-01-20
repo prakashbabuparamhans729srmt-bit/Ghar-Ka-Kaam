@@ -30,6 +30,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useLanguage } from "@/context/language-context";
+import { useAuth } from "@/context/auth-context";
 
 const initialState = {
   message: "",
@@ -58,6 +59,7 @@ export default function ProviderRegistration() {
   const { toast } = useToast();
   const router = useRouter();
   const { t } = useLanguage();
+  const { login } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [base64Files, setBase64Files] = useState<string[]>([]);
@@ -88,6 +90,7 @@ export default function ProviderRegistration() {
 
   const handleOtpVerify = () => {
     if (otp === "123456") {
+      login();
       toast({
         title: t('registration_success_title'),
         description: t('registration_success_description'),

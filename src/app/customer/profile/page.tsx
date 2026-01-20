@@ -1,14 +1,16 @@
 'use client';
 
-import { ArrowLeft, User, Phone, MapPin, Settings } from "lucide-react";
+import { ArrowLeft, User, Phone, MapPin, Settings, LogOut } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useLanguage } from "@/context/language-context";
+import { useAuth } from "@/context/auth-context";
 
 export default function CustomerProfilePage() {
     const { t } = useLanguage();
+    const { logout } = useAuth();
     const customerName = "रवि जी";
     const customerMobile = "+91 9876543210";
     const customerAddress = "साकेत, दिल्ली";
@@ -49,6 +51,10 @@ export default function CustomerProfilePage() {
                       <Settings className="mr-2 h-4 w-4" />
                       {t('settings')}
                   </Link>
+              </Button>
+              <Button variant="destructive" onClick={() => logout()}>
+                <LogOut className="mr-2 h-4 w-4" />
+                {t('logout')}
               </Button>
             </div>
         </CardContent>
