@@ -2,6 +2,7 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, CheckCircle, FileUp, Loader2, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
@@ -53,6 +54,7 @@ function SubmitButton() {
 export default function ProviderRegistration() {
   const [formState, formAction] = useFormState(onRegister, initialState);
   const { toast } = useToast();
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [base64Files, setBase64Files] = useState<string[]>([]);
@@ -68,6 +70,7 @@ export default function ProviderRegistration() {
         formRef.current?.reset();
         setFiles([]);
         setBase64Files([]);
+        router.push('/provider/dashboard');
       }
     } else if (formState.message) {
       toast({
@@ -76,7 +79,7 @@ export default function ProviderRegistration() {
         variant: "destructive",
       });
     }
-  }, [formState, toast]);
+  }, [formState, toast, router]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
