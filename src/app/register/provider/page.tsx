@@ -66,7 +66,10 @@ export default function ProviderRegistration() {
   
   const [step, setStep] = useState<'details' | 'otp'>('details');
   const [otp, setOtp] = useState("");
+  
+  const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
+  const [serviceType, setServiceType] = useState("");
   
   const certifications = certificationsData.map(c => ({...c, label: t(c.labelKey)}));
 
@@ -90,6 +93,9 @@ export default function ProviderRegistration() {
 
   const handleOtpVerify = () => {
     if (otp === "123456") {
+      localStorage.setItem("providerName", name);
+      localStorage.setItem("providerMobile", mobile);
+      localStorage.setItem("providerService", serviceType);
       login();
       toast({
         title: t('registration_success_title'),
@@ -148,7 +154,7 @@ export default function ProviderRegistration() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">{t('providerRegistration_nameLabel')}</Label>
-                  <Input id="name" name="name" placeholder={t('providerRegistration_namePlaceholder')} required />
+                  <Input id="name" name="name" placeholder={t('providerRegistration_namePlaceholder')} required value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="mobile">📱 {t('customerRegistration_mobileLabel')}</Label>
@@ -161,7 +167,7 @@ export default function ProviderRegistration() {
 
               <div className="space-y-2">
                 <Label htmlFor="serviceType">🔧 {t('providerRegistration_serviceTypeLabel')}</Label>
-                <Select name="serviceType" required>
+                <Select name="serviceType" required onValueChange={setServiceType}>
                   <SelectTrigger>
                     <SelectValue placeholder={t('providerRegistration_serviceTypePlaceholder')} />
                   </SelectTrigger>

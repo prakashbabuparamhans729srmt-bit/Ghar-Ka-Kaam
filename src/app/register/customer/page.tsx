@@ -41,6 +41,7 @@ import { getServiceCategories } from "@/lib/data";
 import { useAuth } from "@/context/auth-context";
 
 const getFormSchema = (t: TFunction) => z.object({
+  name: z.string().min(1, { message: t('validation_name_required')}),
   mobile: z.string().min(10, { message: t('validation_mobile_10_digits') }),
   address: z.string().min(1, { message: t('validation_address_required') }),
   houseType: z.string({ required_error: t('validation_houseType_required') }),
@@ -65,6 +66,7 @@ export default function CustomerRegistration() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       mobile: "",
       address: "",
       services: [],
@@ -72,6 +74,8 @@ export default function CustomerRegistration() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    localStorage.setItem("customerName", values.name);
+    localStorage.setItem("customerMobile", values.mobile);
     localStorage.setItem("customerAddress", values.address);
     setMobile(values.mobile);
     setStep('otp');
@@ -145,6 +149,19 @@ export default function CustomerRegistration() {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardContent className="grid gap-6">
+                   <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>👤 {t('customerRegistration_nameLabel')}</FormLabel>
+                        <FormControl>
+                          <Input placeholder={t('customerRegistration_namePlaceholder')} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="mobile"

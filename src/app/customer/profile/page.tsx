@@ -12,12 +12,20 @@ import { useEffect, useState } from "react";
 export default function CustomerProfilePage() {
     const { t } = useLanguage();
     const { logout } = useAuth();
-    const customerName = "रवि जी";
-    const customerMobile = "+91 9876543210";
-    const [customerAddress, setCustomerAddress] = useState("साकेत, दिल्ली");
+    const [customerName, setCustomerName] = useState("ग्राहक");
+    const [customerMobile, setCustomerMobile] = useState("");
+    const [customerAddress, setCustomerAddress] = useState("...");
 
     useEffect(() => {
+        const savedName = localStorage.getItem("customerName");
+        const savedMobile = localStorage.getItem("customerMobile");
         const savedAddress = localStorage.getItem("customerAddress");
+        if (savedName) {
+            setCustomerName(savedName);
+        }
+        if (savedMobile) {
+            setCustomerMobile(savedMobile);
+        }
         if (savedAddress) {
             setCustomerAddress(savedAddress);
         }
@@ -36,7 +44,7 @@ export default function CustomerProfilePage() {
       <Card>
         <CardContent className="p-6 flex flex-col items-center gap-4">
             <Avatar className="h-24 w-24">
-                <AvatarImage src="https://i.pravatar.cc/150?u=ravi" />
+                <AvatarImage src={`https://i.pravatar.cc/150?u=${customerMobile}`} />
                 <AvatarFallback>{customerName.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="text-center">
@@ -45,7 +53,7 @@ export default function CustomerProfilePage() {
             <div className="space-y-2 text-left w-full max-w-sm">
                  <div className="flex items-center gap-3">
                     <Phone className="h-5 w-5 text-muted-foreground" />
-                    <span>{customerMobile}</span>
+                    <span>+91 {customerMobile}</span>
                 </div>
                  <div className="flex items-center gap-3">
                     <MapPin className="h-5 w-5 text-muted-foreground" />

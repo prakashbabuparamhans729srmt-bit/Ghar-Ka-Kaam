@@ -8,12 +8,33 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/context/language-context";
 import { useAuth } from "@/context/auth-context";
+import { useEffect, useState } from "react";
 
 export default function ProviderProfilePage() {
     const { t } = useLanguage();
     const { logout } = useAuth();
-    const providerName = "राम सिंह";
-    const providerService = "प्लंबर";
+    const [providerName, setProviderName] = useState("प्रोवाइडर");
+    const [providerService, setProviderService] = useState("");
+    const [providerMobile, setProviderMobile] = useState("");
+
+    const serviceNameMap: { [key: string]: string } = {
+        'plumber': t('service_plumbing'),
+        'electrician': t('service_electrical'),
+        'cleaner': t('service_cleaning'),
+        'ac-technician': t('service_ac'),
+        'painter': t('service_painting'),
+        'carpenter': t('service_carpenter'),
+        'multi-skill': t('multi_skill'),
+    };
+
+    useEffect(() => {
+        const savedName = localStorage.getItem("providerName");
+        const savedService = localStorage.getItem("providerService");
+        const savedMobile = localStorage.getItem("providerMobile");
+        if (savedName) setProviderName(savedName);
+        if (savedService) setProviderService(savedService);
+        if (savedMobile) setProviderMobile(savedMobile);
+    }, []);
 
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
@@ -28,12 +49,12 @@ export default function ProviderProfilePage() {
       <Card>
         <CardContent className="p-6 flex flex-col items-center gap-4">
             <Avatar className="h-24 w-24">
-                <AvatarImage src="https://i.pravatar.cc/150?u=p001" />
+                <AvatarImage src={`https://i.pravatar.cc/150?u=${providerMobile}`} />
                 <AvatarFallback>{providerName.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="text-center">
                 <h2 className="text-xl font-bold">{providerName}</h2>
-                <p className="text-muted-foreground">{providerService}</p>
+                <p className="text-muted-foreground">{serviceNameMap[providerService] || providerService}</p>
             </div>
             <Badge variant="outline">{t('providerProfile_verified')}</Badge>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
