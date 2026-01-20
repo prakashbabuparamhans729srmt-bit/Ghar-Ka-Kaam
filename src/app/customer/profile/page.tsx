@@ -5,8 +5,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useLanguage } from "@/context/language-context";
 
 export default function CustomerProfilePage() {
+    const { t } = useLanguage();
     const customerName = "रवि जी";
     const customerMobile = "+91 9876543210";
     const customerAddress = "साकेत, दिल्ली";
@@ -19,7 +21,7 @@ export default function CustomerProfilePage() {
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold font-headline">मेरी प्रोफाइल</h1>
+        <h1 className="text-2xl font-bold font-headline">{t('my_profile')}</h1>
       </div>
       <Card>
         <CardContent className="p-6 flex flex-col items-center gap-4">
@@ -41,11 +43,11 @@ export default function CustomerProfilePage() {
                 </div>
             </div>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
-              <Button variant="outline">प्रोफाइल संपादित करें</Button>
+              <Button variant="outline">{t('edit_profile')}</Button>
               <Button variant="outline" asChild>
                   <Link href="/settings">
                       <Settings className="mr-2 h-4 w-4" />
-                      सेटिंग्स
+                      {t('settings')}
                   </Link>
               </Button>
             </div>

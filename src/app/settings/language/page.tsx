@@ -2,11 +2,11 @@
 
 import { ArrowLeft, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { useLanguage, type Locale } from "@/context/language-context";
 
 const languages = [
     { code: 'hi', name: 'हिंदी' },
@@ -24,13 +24,13 @@ const languages = [
 export default function LanguageSettingsPage() {
     const router = useRouter();
     const { toast } = useToast();
-    const [selectedLanguage, setSelectedLanguage] = useState('hi');
+    const { locale, setLocale, t } = useLanguage();
 
     const handleLanguageChange = (langCode: string, langName: string) => {
-        setSelectedLanguage(langCode);
+        setLocale(langCode as Locale);
         toast({
-            title: "भाषा अपडेट की गई!",
-            description: `ऐप की भाषा अब ${langName} है।`,
+            title: t('languageSettings_updatedTitle'),
+            description: t('languageSettings_updatedDescription', { langName }),
         });
         // In a real app, you would persist this setting and reload the UI.
         setTimeout(() => router.back(), 1000);
@@ -42,10 +42,10 @@ export default function LanguageSettingsPage() {
         <Button variant="outline" size="icon" asChild>
           <Link href="/settings">
             <ArrowLeft className="h-4 w-4" />
-            <span className="sr-only">वापस</span>
+            <span className="sr-only">{t('go_back')}</span>
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold font-headline">भाषा चुनें</h1>
+        <h1 className="text-2xl font-bold font-headline">{t('languageSettings_title')}</h1>
       </div>
       <Card>
         <CardContent className="p-6">
@@ -53,12 +53,12 @@ export default function LanguageSettingsPage() {
                 {languages.map((lang) => (
                     <Button
                         key={lang.code}
-                        variant={selectedLanguage === lang.code ? "default" : "outline"}
+                        variant={locale === lang.code ? "default" : "outline"}
                         className="flex justify-between items-center h-12 text-sm"
                         onClick={() => handleLanguageChange(lang.code, lang.name)}
                     >
                         <span>{lang.name}</span>
-                        {selectedLanguage === lang.code && <Check className="h-4 w-4" />}
+                        {locale === lang.code && <Check className="h-4 w-4" />}
                     </Button>
                 ))}
             </div>

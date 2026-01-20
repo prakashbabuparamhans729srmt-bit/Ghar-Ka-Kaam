@@ -1,11 +1,15 @@
+'use client';
+
 import { ArrowLeft, User, Settings } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/context/language-context";
 
 export default function ProviderProfilePage() {
+    const { t } = useLanguage();
     const providerName = "राम सिंह";
     const providerService = "प्लंबर";
 
@@ -17,7 +21,7 @@ export default function ProviderProfilePage() {
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold font-headline">मेरी प्रोफाइल</h1>
+        <h1 className="text-2xl font-bold font-headline">{t('my_profile')}</h1>
       </div>
       <Card>
         <CardContent className="p-6 flex flex-col items-center gap-4">
@@ -29,13 +33,13 @@ export default function ProviderProfilePage() {
                 <h2 className="text-xl font-bold">{providerName}</h2>
                 <p className="text-muted-foreground">{providerService}</p>
             </div>
-            <Badge variant="outline">सत्यापित</Badge>
+            <Badge variant="outline">{t('providerProfile_verified')}</Badge>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
-              <Button variant="outline">प्रोफाइल संपादित करें</Button>
+              <Button variant="outline">{t('edit_profile')}</Button>
               <Button variant="outline" asChild>
                 <Link href="/settings">
                   <Settings className="mr-2 h-4 w-4" />
-                  सेटिंग्स
+                  {t('settings')}
                 </Link>
               </Button>
             </div>

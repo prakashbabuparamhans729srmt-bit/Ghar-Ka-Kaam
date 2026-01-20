@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import Link from "next/link";
+import { useLanguage } from "@/context/language-context";
 
 const jobRequests = [
   {
@@ -39,45 +40,46 @@ const jobRequests = [
 ];
 
 export default function ProviderDashboard() {
+  const { t } = useLanguage();
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
       <div className="space-y-6">
         {/* Header */}
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold font-headline">नमस्ते, राम सिंह!</h1>
-          <p className="text-muted-foreground">आपका दिन शुभ हो।</p>
+          <h1 className="text-2xl font-bold font-headline">{t('providerDashboard_greeting')}</h1>
+          <p className="text-muted-foreground">{t('providerDashboard_subtitle')}</p>
         </div>
 
         {/* Stats */}
         <section className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">आज की कमाई</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('providerDashboard_todayEarnings')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">₹1,250</div>
-              <p className="text-xs text-muted-foreground">+20% कल से</p>
+              <p className="text-xs text-muted-foreground">{t('providerDashboard_earningsIncrease')}</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">कुल जॉब</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('providerDashboard_totalJobs')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">5</div>
-              <p className="text-xs text-muted-foreground">3 आज पूरे हुए</p>
+              <p className="text-xs text-muted-foreground">{t('providerDashboard_jobsCompleted', {count: 3})}</p>
             </CardContent>
           </Card>
            <Card className="col-span-2 md:col-span-1">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium">आपकी रेटिंग</CardTitle>
+              <CardTitle className="text-sm font-medium">{t('providerDashboard_yourRating')}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-2">
                 <div className="text-2xl font-bold">4.9</div>
                 <Star className="h-6 w-6 text-yellow-400 fill-yellow-400" />
               </div>
-              <p className="text-xs text-muted-foreground">55 समीक्षाओं पर आधारित</p>
+              <p className="text-xs text-muted-foreground">{t('providerDashboard_ratingBasedOn', { count: 55 })}</p>
             </CardContent>
           </Card>
         </section>
@@ -85,18 +87,18 @@ export default function ProviderDashboard() {
         {/* Verification Alert */}
         <Alert variant="destructive">
             <AlertTriangle className="h-4 w-4" />
-            <AlertTitle>प्रोफाइल वेरिफिकेशन लंबित है</AlertTitle>
+            <AlertTitle>{t('providerDashboard_verificationPending')}</AlertTitle>
             <AlertDescription>
-                आपकी कमाई को अनलॉक करने के लिए कृपया अपनी प्रोफ़ाइल पूरी करें और दस्तावेज़ सत्यापित करें।
+                {t('providerDashboard_verificationMessage')}
                 <Button variant="link" className="p-0 h-auto ml-2" asChild>
-                  <Link href="/register/provider">अभी पूरा करें</Link>
+                  <Link href="/register/provider">{t('providerDashboard_completeNow')}</Link>
                 </Button>
             </AlertDescription>
         </Alert>
 
         {/* Job Requests */}
         <section className="space-y-4">
-          <h2 className="text-xl font-bold font-headline">नई जॉब रिक्वेस्ट</h2>
+          <h2 className="text-xl font-bold font-headline">{t('providerDashboard_newJobRequests')}</h2>
            <div className="grid gap-4">
             {jobRequests.map((job) => (
                 <Card key={job.id}>
@@ -119,8 +121,8 @@ export default function ProviderDashboard() {
                             </div>
                         </div>
                         <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0">
-                            <Button variant="outline" className="flex-1">अस्वीकार</Button>
-                            <Button className="flex-1">स्वीकार करें (₹450)</Button>
+                            <Button variant="outline" className="flex-1">{t('reject')}</Button>
+                            <Button className="flex-1">{t('accept_offer', {amount: 450})}</Button>
                         </div>
                     </CardContent>
                 </Card>

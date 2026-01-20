@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Search, Star } from "lucide-react";
-import { serviceCategories, topProviders } from "@/lib/data";
+import { getServiceCategories, getTopProviders } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
@@ -13,14 +13,19 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { useLanguage } from "@/context/language-context";
 
 export default function CustomerDashboard() {
+  const { t, locale } = useLanguage();
+  const serviceCategories = getServiceCategories(t);
+  const topProviders = getTopProviders(t);
+  
   const [currentDate, setCurrentDate] = useState("");
   const [location, setLocation] = useState("साकेत, दिल्ली");
 
   useEffect(() => {
     setCurrentDate(
-      new Date().toLocaleDateString("hi-IN", {
+      new Date().toLocaleDateString(locale, {
         weekday: "long",
         year: "numeric",
         month: "long",
@@ -31,14 +36,14 @@ export default function CustomerDashboard() {
     if (savedLocation) {
       setLocation(savedLocation);
     }
-  }, []);
+  }, [locale]);
 
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
       <div className="space-y-4">
         {/* Header Section */}
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold font-headline">नमस्ते रवि जी!</h1>
+          <h1 className="text-2xl font-bold font-headline">{t('customerDashboard_greeting')}</h1>
           <p className="text-muted-foreground">{currentDate} | 📍 {location}</p>
         </div>
 
@@ -46,14 +51,14 @@ export default function CustomerDashboard() {
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
           <Input
-            placeholder="क्या करवाना है? जैसे नल ठीक करवाना, सफाई..."
+            placeholder={t('customerDashboard_searchPlaceholder')}
             className="w-full rounded-full bg-muted pl-10 py-6 text-base"
           />
         </div>
 
         {/* Quick Services Section */}
         <section className="space-y-4">
-          <h2 className="text-xl font-bold font-headline">⚡ त्वरित सेवाएँ</h2>
+          <h2 className="text-xl font-bold font-headline">{t('customerDashboard_quickServices')}</h2>
           <div className="grid grid-cols-4 gap-3 md:grid-cols-8">
             {serviceCategories.map((service) => (
               <Link href={service.href} key={service.name} className="group flex flex-col items-center text-center gap-2">
@@ -69,7 +74,7 @@ export default function CustomerDashboard() {
 
         {/* Top Rated Providers Section */}
         <section className="space-y-4">
-          <h2 className="text-xl font-bold font-headline">🏆 टॉप रेटेड प्रोवाइडर</h2>
+          <h2 className="text-xl font-bold font-headline">{t('customerDashboard_topRatedProviders')}</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {topProviders.slice(0, 2).map((provider) => (
               <Card key={provider.name}>
@@ -88,8 +93,8 @@ export default function CustomerDashboard() {
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-lg">₹{provider.price}</p>
-                    <p className="text-xs text-muted-foreground">शुरुआती</p>
-                    <Button size="sm" className="mt-2">बुक करें</Button>
+                    <p className="text-xs text-muted-foreground">{t('provider_startingAt')}</p>
+                    <Button size="sm" className="mt-2">{t('book_now')}</Button>
                   </div>
                 </CardContent>
               </Card>

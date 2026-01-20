@@ -44,15 +44,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
-
-const services = [
-  { id: "plumbing", label: "प्लंबिंग" },
-  { id: "electrical", label: "इलेक्ट्रिकल" },
-  { id: "cleaning", label: "सफाई" },
-  { id: "ac", label: "AC सर्विस" },
-  { id: "painting", label: "पेंटिंग" },
-  { id: "carpenter", label: "कारपेंटर" },
-];
+import { useLanguage } from "@/context/language-context";
+import { getServiceCategories } from "@/lib/data";
 
 const formSchema = z.object({
   mobile: z.string().min(10, { message: "कृपया 10 अंकों का मोबाइल नंबर दर्ज करें।" }),
@@ -66,6 +59,9 @@ const formSchema = z.object({
 export default function CustomerRegistration() {
   const router = useRouter();
   const { toast } = useToast();
+  const { t } = useLanguage();
+  const services = getServiceCategories(t);
+  
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const [otp, setOtp] = useState("");
 
@@ -82,8 +78,8 @@ export default function CustomerRegistration() {
     localStorage.setItem("customerAddress", values.address);
     setShowOtpDialog(true);
     toast({
-        title: "OTP भेजा गया",
-        description: "आपके मोबाइल नंबर पर एक OTP भेजा गया है।",
+        title: t('otp_sent_title'),
+        description: t('otp_sent_description'),
     });
   }
 
@@ -91,15 +87,15 @@ export default function CustomerRegistration() {
     // Using a dummy OTP for demonstration
     if (otp === "1234") {
         toast({
-            title: "पंजीकरण सफल!",
-            description: "घर का काम में आपका स्वागत है।",
+            title: t('registration_success_title'),
+            description: t('registration_success_description'),
             variant: "default",
         });
         router.push("/customer/dashboard");
     } else {
         toast({
-            title: "गलत OTP",
-            description: "कृपया सही OTP दर्ज करें।",
+            title: t('wrong_otp_title'),
+            description: t('wrong_otp_description'),
             variant: "destructive",
         });
     }
@@ -113,23 +109,22 @@ export default function CustomerRegistration() {
           form.setValue("address", detectedAddress);
           localStorage.setItem("customerAddress", detectedAddress);
           toast({
-            title: "लोकेशन मिल गई!",
-            description: "हमने आपकी लोकेशन का अनुमान लगा लिया है।",
+            title: t('location_found_title'),
+            description: t('location_found_description'),
           });
         },
         () => {
           toast({
-            title: "लोकेशन नहीं मिली",
-            description:
-              "आपकी लोकेशन का पता नहीं लगा सके। कृपया मैन्युअल रूप से दर्ज करें।",
+            title: t('location_not_found_title'),
+            description: t('location_not_found_description'),
             variant: "destructive",
           });
         }
       );
     } else {
       toast({
-        title: "लोकेशन सपोर्ट नहीं है",
-        description: "आपके ब्राउज़र में जियोलोकेशन सपोर्ट नहीं है।",
+        title: t('location_unsupported_title'),
+        description: t('location_unsupported_description'),
         variant: "destructive",
       });
     }
@@ -143,9 +138,9 @@ export default function CustomerRegistration() {
               <Button variant="outline" size="icon" asChild>
                   <Link href="/"><ArrowLeft className="h-4 w-4" /></Link>
               </Button>
-              <CardTitle className="font-headline text-xl">📱 ग्राहक पंजीकरण</CardTitle>
+              <CardTitle className="font-headline text-xl">📱 {t('customerRegistration_title')}</CardTitle>
           </div>
-          <CardDescription>अपना खाता बनाएं और सेवाओं का लाभ उठाएं।</CardDescription>
+          <CardDescription>{t('customerRegistration_description')}</CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -155,7 +150,7 @@ export default function CustomerRegistration() {
                 name="mobile"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>📱 मोबाइल नंबर:</FormLabel>
+                    <FormLabel>📱 {t('customerRegistration_mobileLabel')}</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">+91</span>
@@ -172,10 +167,10 @@ export default function CustomerRegistration() {
                 name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>📍 आपका पता:</FormLabel>
+                    <FormLabel>📍 {t('customerRegistration_addressLabel')}</FormLabel>
                     <FormControl>
                       <div className="relative">
-                        <Input placeholder="मैन्युअल दर्ज करें" {...field} />
+                        <Input placeholder={t('customerRegistration_addressPlaceholder')} {...field} />
                         <Button
                           type="button"
                           variant="ghost"
@@ -197,19 +192,19 @@ export default function CustomerRegistration() {
                 name="houseType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>🏠 घर का प्रकार:</FormLabel>
+                    <FormLabel>🏠 {t('customerRegistration_houseTypeLabel')}</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="एक प्रकार चुनें" />
+                          <SelectValue placeholder={t('customerRegistration_houseTypePlaceholder')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="apartment">अपार्टमेंट</SelectItem>
-                        <SelectItem value="independent">इंडिपेंडेंट हाउस</SelectItem>
-                        <SelectItem value="villa">विला</SelectItem>
-                        <SelectItem value="office">ऑफिस</SelectItem>
-                        <SelectItem value="commercial">कॉमर्शियल प्रॉपर्टी</SelectItem>
+                        <SelectItem value="apartment">{t('customerRegistration_houseType_apartment')}</SelectItem>
+                        <SelectItem value="independent">{t('customerRegistration_houseType_independent')}</SelectItem>
+                        <SelectItem value="villa">{t('customerRegistration_houseType_villa')}</SelectItem>
+                        <SelectItem value="office">{t('customerRegistration_houseType_office')}</SelectItem>
+                        <SelectItem value="commercial">{t('customerRegistration_houseType_commercial')}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -222,7 +217,7 @@ export default function CustomerRegistration() {
                 name="services"
                 render={() => (
                   <FormItem>
-                    <FormLabel>🎯 पसंदीदा सेवाएँ:</FormLabel>
+                    <FormLabel>🎯 {t('customerRegistration_preferredServicesLabel')}</FormLabel>
                     <div className="grid grid-cols-2 gap-4 rounded-md border p-4">
                       {services.map((item) => (
                         <FormField
@@ -250,7 +245,7 @@ export default function CustomerRegistration() {
                                   />
                                 </FormControl>
                                 <FormLabel className="font-normal">
-                                  {item.label}
+                                  {item.name}
                                 </FormLabel>
                               </FormItem>
                             );
@@ -264,9 +259,9 @@ export default function CustomerRegistration() {
               />
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
-              <Button type="submit" className="w-full">OTP भेजें</Button>
+              <Button type="submit" className="w-full">{t('customerRegistration_sendOtp')}</Button>
               <Button variant="outline" className="w-full">
-                <LogIn className="mr-2 h-4 w-4" /> Google से लॉगिन
+                <LogIn className="mr-2 h-4 w-4" /> {t('customerRegistration_loginWithGoogle')}
               </Button>
             </CardFooter>
           </form>
@@ -275,9 +270,9 @@ export default function CustomerRegistration() {
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>OTP वेरीफाई करें</DialogTitle>
+            <DialogTitle>{t('otp_verify_title')}</DialogTitle>
             <DialogDescription>
-              आपके मोबाइल नंबर पर भेजे गए 4 अंकों का OTP दर्ज करें।
+              {t('otp_verify_description')}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -290,13 +285,13 @@ export default function CustomerRegistration() {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 maxLength={4}
-                placeholder="1234"
+                placeholder={t('otp_placeholder')}
                 className="col-span-4 text-center tracking-[1rem]"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleOtpVerify} className="w-full">वेरीफाई करें</Button>
+            <Button onClick={handleOtpVerify} className="w-full">{t('verify')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -15,6 +15,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { chat, ChatInput } from '@/ai/flows/chatbot';
 import { cn } from '@/lib/utils';
 import Logo from './logo';
+import { useLanguage } from '@/context/language-context';
 
 type Message = {
   role: 'user' | 'model';
@@ -22,11 +23,12 @@ type Message = {
 };
 
 export default function Chatbot() {
+  const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'model',
-      content: 'नमस्ते! मैं काम-बॉट हूँ। मैं आपकी क्या मदद कर सकता हूँ?',
+      content: t('chatbot_greeting'),
     },
   ]);
   const [input, setInput] = useState('');
@@ -52,7 +54,7 @@ export default function Chatbot() {
         console.error('Chatbot error:', error);
         const errorMessage: Message = {
             role: 'model',
-            content: 'माफ़ कीजिए, कुछ गड़बड़ हो गई। कृपया थोड़ी देर बाद कोशिश करें।',
+            content: t('chatbot_error'),
         };
         setMessages((prev) => [...prev, errorMessage]);
     } finally {
@@ -68,6 +70,18 @@ export default function Chatbot() {
       });
     }
   }, [messages]);
+
+  // Update initial message when language changes
+  useEffect(() => {
+    setMessages(prev => {
+        if (prev.length > 0 && prev[0].role === 'model') {
+            const newMessages = [...prev];
+            newMessages[0] = { role: 'model', content: t('chatbot_greeting') };
+            return newMessages;
+        }
+        return prev;
+    });
+  }, [t]);
 
 
   return (
@@ -88,7 +102,7 @@ export default function Chatbot() {
           <CardHeader className="flex flex-row items-center justify-between border-b">
             <div className="flex items-center gap-3">
               <Bot className="h-6 w-6 text-primary" />
-              <CardTitle className="text-lg font-headline">काम-बॉट</CardTitle>
+              <CardTitle className="text-lg font-headline">{t('chatbot_title')}</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="p-0 flex-1">
@@ -130,7 +144,7 @@ export default function Chatbot() {
             <div className="flex w-full items-center space-x-2">
               <Input
                 id="message"
-                placeholder="अपना सवाल पूछें..."
+                placeholder={t('chatbot_placeholder')}
                 className="flex-1"
                 autoComplete="off"
                 value={input}

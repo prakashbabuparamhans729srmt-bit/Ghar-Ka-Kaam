@@ -37,24 +37,26 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { useLanguage } from "@/context/language-context";
 
 const initialState = {
   message: "",
 };
 
-const certifications = [
-  { id: "iti", label: "ITI" },
-  { id: "govt", label: "सरकारी" },
-  { id: "training", label: "प्रशिक्षण" },
-  { id: "other", label: "अन्य" },
+const certificationsData = [
+  { id: "iti", labelKey: "certificate_iti" },
+  { id: "govt", labelKey: "certificate_govt" },
+  { id: "training", labelKey: "certificate_training" },
+  { id: "other", labelKey: "certificate_other" },
 ];
 
 function SubmitButton() {
   const { pending } = useFormStatus();
+  const { t } = useLanguage();
   return (
     <Button type="submit" className="w-full" disabled={pending}>
       {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-      आगे बढ़ें
+      {t('providerRegistration_proceed')}
     </Button>
   );
 }
@@ -63,19 +65,22 @@ export default function ProviderRegistration() {
   const [formState, formAction] = useFormState(onRegister, initialState);
   const { toast } = useToast();
   const router = useRouter();
+  const { t } = useLanguage();
   const formRef = useRef<HTMLFormElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [base64Files, setBase64Files] = useState<string[]>([]);
   const [showOtpDialog, setShowOtpDialog] = useState(false);
   const [otp, setOtp] = useState("");
+  const certifications = certificationsData.map(c => ({...c, label: t(c.labelKey)}));
+
 
   useEffect(() => {
     if (formState.message && formState.data) {
       if (formState.data.isValid) {
         setShowOtpDialog(true);
         toast({
-          title: "AI सत्यापन सफल!",
-          description: "अब कृपया अपना मोबाइल नंबर OTP से वेरीफाई करें।",
+          title: t('providerRegistration_aiVerificationSuccess'),
+          description: t('providerRegistration_verifyMobile'),
           variant: "default",
         });
       } else {
@@ -87,18 +92,18 @@ export default function ProviderRegistration() {
       }
     } else if (formState.message) {
       toast({
-        title: "त्रुटि",
+        title: t('providerRegistration_error'),
         description: formState.message,
         variant: "destructive",
       });
     }
-  }, [formState, toast]);
+  }, [formState, toast, t]);
 
   const handleOtpVerify = () => {
     if (otp === "1234") {
       toast({
-        title: "पंजीकरण सफल!",
-        description: "घर का काम में आपका स्वागत है।",
+        title: t('registration_success_title'),
+        description: t('registration_success_description'),
         variant: "default",
       });
       formRef.current?.reset();
@@ -107,8 +112,8 @@ export default function ProviderRegistration() {
       router.push("/provider/dashboard");
     } else {
       toast({
-        title: "गलत OTP",
-        description: "कृपया सही OTP दर्ज करें।",
+        title: t('wrong_otp_title'),
+        description: t('wrong_otp_description'),
         variant: "destructive",
       });
     }
@@ -140,51 +145,51 @@ export default function ProviderRegistration() {
               </Link>
             </Button>
             <CardTitle className="font-headline text-xl">
-              🔧 सेवा प्रदाता पंजीकरण
+              🔧 {t('providerRegistration_title')}
             </CardTitle>
           </div>
           <CardDescription>
-            हमारे साथ जुड़ें और अपनी कमाई बढ़ाएं।
+            {t('providerRegistration_description')}
           </CardDescription>
         </CardHeader>
         <form ref={formRef} action={formAction}>
           <CardContent className="grid gap-6">
             <div className="space-y-2">
-              <Label htmlFor="name">नाम</Label>
-              <Input id="name" name="name" placeholder="आपका पूरा नाम" required />
+              <Label htmlFor="name">{t('providerRegistration_nameLabel')}</Label>
+              <Input id="name" name="name" placeholder={t('providerRegistration_namePlaceholder')} required />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="serviceType">🔧 सेवा का प्रकार:</Label>
+              <Label htmlFor="serviceType">🔧 {t('providerRegistration_serviceTypeLabel')}</Label>
               <Select name="serviceType" required>
                 <SelectTrigger>
-                  <SelectValue placeholder="एक सेवा चुनें" />
+                  <SelectValue placeholder={t('providerRegistration_serviceTypePlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="plumber">प्लंबर</SelectItem>
-                  <SelectItem value="electrician">इलेक्ट्रीशियन</SelectItem>
-                  <SelectItem value="cleaner">सफाई कर्मचारी</SelectItem>
-                  <SelectItem value="ac-technician">AC टेक्नीशियन</SelectItem>
-                  <SelectItem value="painter">पेंटर</SelectItem>
-                  <SelectItem value="carpenter">कारपेंटर</SelectItem>
-                  <SelectItem value="multi-skill">मल्टी-स्किल</SelectItem>
+                  <SelectItem value="plumber">{t('service_plumbing')}</SelectItem>
+                  <SelectItem value="electrician">{t('service_electrical')}</SelectItem>
+                  <SelectItem value="cleaner">{t('service_cleaning')}</SelectItem>
+                  <SelectItem value="ac-technician">{t('service_ac')}</SelectItem>
+                  <SelectItem value="painter">{t('service_painting')}</SelectItem>
+                  <SelectItem value="carpenter">{t('service_carpenter')}</SelectItem>
+                  <SelectItem value="multi-skill">{t('multi_skill')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="experience">🎓 अनुभव (वर्ष):</Label>
+                <Label htmlFor="experience">🎓 {t('providerRegistration_experienceLabel')}</Label>
                 <Input
                   id="experience"
                   name="experience"
                   type="number"
-                  placeholder="उदा. 5"
+                  placeholder={t('providerRegistration_experiencePlaceholder')}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label>प्रमाणपत्र:</Label>
+                <Label>{t('providerRegistration_certificatesLabel')}</Label>
                 <div className="grid gap-2 pt-2">
                   {certifications.map((cert) => (
                     <div key={cert.id} className="flex items-center gap-2">
@@ -203,23 +208,23 @@ export default function ProviderRegistration() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="workArea">📍 कार्य क्षेत्र:</Label>
+              <Label htmlFor="workArea">📍 {t('providerRegistration_workAreaLabel')}</Label>
               <Select name="workArea" required>
                 <SelectTrigger>
-                  <SelectValue placeholder="अपना कार्य क्षेत्र चुनें" />
+                  <SelectValue placeholder={t('providerRegistration_workAreaPlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="5km">5km रेडियस</SelectItem>
-                  <SelectItem value="10km">10km रेडियस</SelectItem>
-                  <SelectItem value="full-city">पूरा शहर</SelectItem>
-                  <SelectItem value="multi-city">मल्टी-सिटी</SelectItem>
+                  <SelectItem value="5km">{t('work_area_5km')}</SelectItem>
+                  <SelectItem value="10km">{t('work_area_10km')}</SelectItem>
+                  <SelectItem value="full-city">{t('work_area_full_city')}</SelectItem>
+                  <SelectItem value="multi-city">{t('work_area_multi_city')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="documents">
-                दस्तावेज़ अपलोड करें (AI द्वारा सत्यापित)
+                {t('providerRegistration_uploadLabel')}
               </Label>
               <div className="flex w-full items-center justify-center">
                 <label
@@ -229,11 +234,10 @@ export default function ProviderRegistration() {
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <FileUp className="mb-4 h-8 w-8 text-muted-foreground" />
                     <p className="mb-2 text-sm text-muted-foreground">
-                      <span className="font-semibold">अपलोड करने के लिए क्लिक करें</span>{" "}
-                      या खींचें और छोड़ें
+                      <span className="font-semibold">{t('providerRegistration_uploadHint')}</span>
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      पहचान पत्र, प्रमाण पत्र, आदि।
+                      {t('providerRegistration_uploadSubHint')}
                     </p>
                   </div>
                   <Input
@@ -261,14 +265,14 @@ export default function ProviderRegistration() {
 
             <Alert>
               <CardTitle className="text-base font-headline">
-                💼 कमीशन मॉडल
+                💼 {t('providerRegistration_commissionModelTitle')}
               </CardTitle>
               <AlertDescription className="text-sm">
                 <ul className="mt-2 list-disc space-y-1 pl-5">
-                  <li>प्लेटफॉर्म कमीशन: 15%</li>
-                  <li>न्यूनतम शुल्क: ₹150*</li>
-                  <li>भुगतान: दैनिक/साप्ताहिक</li>
-                  <li>बोनस: समीक्षा और रेटिंग पर आधारित</li>
+                  <li>{t('providerRegistration_platformCommission')}</li>
+                  <li>{t('providerRegistration_minimumFee')}</li>
+                  <li>{t('providerRegistration_payment')}</li>
+                  <li>{t('providerRegistration_bonus')}</li>
                 </ul>
               </AlertDescription>
             </Alert>
@@ -289,9 +293,9 @@ export default function ProviderRegistration() {
       <Dialog open={showOtpDialog} onOpenChange={setShowOtpDialog}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>OTP वेरीफाई करें</DialogTitle>
+            <DialogTitle>{t('otp_verify_title')}</DialogTitle>
             <DialogDescription>
-              आपके मोबाइल नंबर पर भेजे गए 4 अंकों का OTP दर्ज करें।
+              {t('otp_verify_description')}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -304,14 +308,14 @@ export default function ProviderRegistration() {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
                 maxLength={4}
-                placeholder="1234"
+                placeholder={t('otp_placeholder')}
                 className="col-span-4 text-center tracking-[1rem]"
               />
             </div>
           </div>
           <DialogFooter>
             <Button onClick={handleOtpVerify} className="w-full">
-              वेरीफाई करें
+              {t('verify')}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,22 +1,22 @@
 import { Hammer, Lightbulb, PaintRoller, ShowerHead, Snowflake, Sofa, Tv2 } from "lucide-react";
 import { BroomIcon } from "@/components/icons/broom-icon";
 
-export const serviceCategories = [
-    { id: "plumbing", name: "प्लंबिंग", icon: ShowerHead, price: "300", color: "bg-cyan-500/10 text-cyan-500", href: "/customer/services/plumbing" },
-    { id: "electrical", name: "इलेक्ट्रिकल", icon: Lightbulb, price: "250", color: "bg-orange-500/10 text-orange-500", href: "/customer/services/electrical" },
-    { id: "cleaning", name: "सफाई", icon: BroomIcon, price: "500", color: "bg-emerald-500/10 text-emerald-500", href: "/customer/services/cleaning" },
-    { id: "ac", name: "AC", icon: Snowflake, price: "600", color: "bg-sky-500/10 text-sky-500", href: "/customer/services/ac" },
-    { id: "painting", name: "पेंटिंग", icon: PaintRoller, price: "800", color: "bg-violet-500/10 text-violet-500", href: "/customer/services/painting" },
-    { id: "carpenter", name: "कारपेंटर", icon: Hammer, price: "450", color: "bg-yellow-700/10 text-yellow-700", href: "/customer/services/carpenter" },
-    { id: "furniture", name: "फर्नीचर", icon: Sofa, price: "700", color: "bg-rose-500/10 text-rose-500", href: "/customer/services/furniture" },
-    { id: "tv", name: "टीवी", icon: Tv2, price: "550", color: "bg-indigo-500/10 text-indigo-500", href: "/customer/services/tv" },
+export const getServiceCategories = (t: (key: string) => string) => [
+    { id: "plumbing", name: t('service_plumbing'), icon: ShowerHead, price: "300", color: "bg-cyan-500/10 text-cyan-500", href: "/customer/services/plumbing" },
+    { id: "electrical", name: t('service_electrical'), icon: Lightbulb, price: "250", color: "bg-orange-500/10 text-orange-500", href: "/customer/services/electrical" },
+    { id: "cleaning", name: t('service_cleaning'), icon: BroomIcon, price: "500", color: "bg-emerald-500/10 text-emerald-500", href: "/customer/services/cleaning" },
+    { id: "ac", name: t('service_ac'), icon: Snowflake, price: "600", color: "bg-sky-500/10 text-sky-500", href: "/customer/services/ac" },
+    { id: "painting", name: t('service_painting'), icon: PaintRoller, price: "800", color: "bg-violet-500/10 text-violet-500", href: "/customer/services/painting" },
+    { id: "carpenter", name: t('service_carpenter'), icon: Hammer, price: "450", color: "bg-yellow-700/10 text-yellow-700", href: "/customer/services/carpenter" },
+    { id: "furniture", name: t('service_furniture'), icon: Sofa, price: "700", color: "bg-rose-500/10 text-rose-500", href: "/customer/services/furniture" },
+    { id: "tv", name: t('service_tv'), icon: Tv2, price: "550", color: "bg-indigo-500/10 text-indigo-500", href: "/customer/services/tv" },
 ];
 
-export const topProviders = [
+export const getTopProviders = (t: (key: string) => string) => [
     {
         name: "राम सिंह",
         serviceId: "plumbing",
-        service: "प्लंबर",
+        service: t('service_plumbing'),
         rating: 4.9,
         eta: "30 मिनट में",
         price: "300",
@@ -29,7 +29,7 @@ export const topProviders = [
     {
         name: "राजू शर्मा",
         serviceId: "electrical",
-        service: "इलेक्ट्रीशियन",
+        service: t('service_electrical'),
         rating: 4.8,
         eta: "45 मिनट में",
         price: "250",
@@ -42,7 +42,7 @@ export const topProviders = [
     {
         name: "सुरेश कुमार",
         serviceId: "plumbing",
-        service: "प्लंबर",
+        service: t('service_plumbing'),
         rating: 4.7,
         eta: "40 मिनट में",
         price: "280",
@@ -53,3 +53,7 @@ export const topProviders = [
         skills: ["पाइप रिपेयर", "नया नल इंस्टॉल", "पानी का रिसाव"],
     },
 ];
+
+// Re-exporting the original data for files that are not yet converted to use the new context
+export const serviceCategories = getServiceCategories((key: string) => key);
+export const topProviders = getTopProviders((key: string) => key);

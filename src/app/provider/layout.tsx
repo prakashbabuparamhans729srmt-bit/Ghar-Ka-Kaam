@@ -1,13 +1,17 @@
+'use client';
+
 import { Briefcase, DollarSign, LayoutDashboard, User } from "lucide-react";
 import Link from "next/link";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/language-context";
 
 export default function ProviderLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { t } = useLanguage();
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
@@ -19,13 +23,13 @@ export default function ProviderLayout({
             <Logo className="h-10 w-10"/>
             <span className="sr-only">GharKaam</span>
           </Link>
-          <h1 className="text-lg font-semibold">प्रोवाइडर डैशबोर्ड</h1>
+          <h1 className="text-lg font-semibold">{t('providerDashboard_title')}</h1>
         </nav>
         <div className="flex w-full items-center justify-end gap-4 md:ml-auto md:gap-2 lg:gap-4">
           <Button variant="secondary" size="icon" className="rounded-full h-8 w-8" asChild>
             <Link href="/provider/profile">
               <User className="h-4 w-4" />
-              <span className="sr-only">Toggle user menu</span>
+              <span className="sr-only">{t('toggle_user_menu')}</span>
             </Link>
           </Button>
         </div>
@@ -36,25 +40,25 @@ export default function ProviderLayout({
             <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="/provider/dashboard">
                     <LayoutDashboard className="h-5 w-5" />
-                    <span>डैशबोर्ड</span>
+                    <span>{t('providerLayout_dashboard')}</span>
                 </Link>
             </Button>
             <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="/provider/jobs">
                     <Briefcase className="h-5 w-5" />
-                    <span>जॉब्स</span>
+                    <span>{t('providerLayout_jobs')}</span>
                 </Link>
             </Button>
             <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="/provider/earnings">
                     <DollarSign className="h-5 w-5" />
-                    <span>कमाई</span>
+                    <span>{t('providerLayout_earnings')}</span>
                 </Link>
             </Button>
              <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="/provider/profile">
                     <User className="h-5 w-5" />
-                    <span>प्रोफाइल</span>
+                    <span>{t('providerLayout_profile')}</span>
                 </Link>
             </Button>
           </div>

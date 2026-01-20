@@ -1,9 +1,13 @@
+'use client';
+
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/context/language-context";
 
 export default function ProviderEarningsPage() {
+  const { t } = useLanguage();
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
        <div className="flex items-center gap-4 mb-6">
@@ -12,11 +16,11 @@ export default function ProviderEarningsPage() {
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <h1 className="text-2xl font-bold font-headline">मेरी कमाई</h1>
+        <h1 className="text-2xl font-bold font-headline">{t('my_earnings')}</h1>
       </div>
       <Card>
         <CardContent className="p-6 text-center">
-            <p className="text-muted-foreground">कमाई का डेटा अभी उपलब्ध नहीं है।</p>
+            <p className="text-muted-foreground">{t('no_earnings_data')}</p>
         </CardContent>
       </Card>
     </div>

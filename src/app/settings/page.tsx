@@ -5,17 +5,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/context/language-context";
 
 export default function SettingsPage() {
     const router = useRouter();
+    const { t } = useLanguage();
+
   return (
     <div className="container mx-auto max-w-4xl p-4 md:p-6">
        <div className="flex items-center gap-4 mb-6">
         <Button variant="outline" size="icon" onClick={() => router.back()}>
           <ArrowLeft className="h-4 w-4" />
-           <span className="sr-only">वापस</span>
+           <span className="sr-only">{t('go_back')}</span>
         </Button>
-        <h1 className="text-2xl font-bold font-headline">सेटिंग्स</h1>
+        <h1 className="text-2xl font-bold font-headline">{t('settings_title')}</h1>
       </div>
       <Card>
         <CardContent className="p-0">
@@ -24,7 +27,7 @@ export default function SettingsPage() {
                      <Link href="/settings/language" className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <Globe className="h-5 w-5 text-muted-foreground" />
-                            <span className="font-medium">भाषा</span>
+                            <span className="font-medium">{t('settings_language')}</span>
                         </div>
                         <ChevronRight className="h-5 w-5 text-muted-foreground" />
                     </Link>

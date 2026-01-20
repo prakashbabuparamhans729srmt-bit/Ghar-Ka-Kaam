@@ -16,10 +16,12 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Logo from "@/components/logo";
+import { useLanguage } from "@/context/language-context";
 
 export default function RoleSelection() {
   const [role, setRole] = React.useState("customer");
   const router = useRouter();
+  const { t } = useLanguage();
 
   const handleContinue = () => {
     if (role === "customer") {
@@ -38,15 +40,15 @@ export default function RoleSelection() {
             <Logo />
           </div>
           <CardTitle className="font-headline text-2xl">
-            Ghar Ka Kaam
+            {t('app_title')}
           </CardTitle>
           <CardDescription className="font-body">
-            "घर की हर ज़रूरत के लिए विश्वसनीय हाथ"
+            "{t('app_tagline')}"
           </CardDescription>
           <div className="flex items-center justify-center gap-1 pt-2 text-sm text-muted-foreground">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             <span className="font-bold">4.8/5</span>
-            <span>(5,00,000+ सेवाएँ)</span>
+            <span>{t('service_rating')}</span>
           </div>
         </CardHeader>
         <CardContent>
@@ -61,9 +63,9 @@ export default function RoleSelection() {
             >
               <RadioGroupItem value="customer" id="customer" />
               <div className="space-y-1">
-                <p className="font-semibold">ग्राहक</p>
+                <p className="font-semibold">{t('customer')}</p>
                 <p className="text-sm text-muted-foreground">
-                  "मुझे सेवा चाहिए"
+                  "{t('customer_tagline')}"
                 </p>
               </div>
             </Label>
@@ -73,9 +75,9 @@ export default function RoleSelection() {
             >
               <RadioGroupItem value="provider" id="provider" />
               <div className="space-y-1">
-                <p className="font-semibold">सेवा प्रदाता</p>
+                <p className="font-semibold">{t('provider')}</p>
                 <p className="text-sm text-muted-foreground">
-                  "मैं सेवा प्रदान करता हूँ"
+                  "{t('provider_tagline')}"
                 </p>
               </div>
             </Label>
@@ -85,9 +87,9 @@ export default function RoleSelection() {
             >
               <RadioGroupItem value="partner" id="partner" disabled />
               <div className="space-y-1">
-                <p className="font-semibold">भागीदार</p>
+                <p className="font-semibold">{t('partner')}</p>
                 <p className="text-sm text-muted-foreground">
-                  "मैं उपकरण/सामग्री सप्लायर हूँ"
+                  "{t('partner_tagline')}"
                 </p>
               </div>
             </Label>
@@ -95,10 +97,10 @@ export default function RoleSelection() {
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
           <Button className="w-full" onClick={handleContinue}>
-            जारी रखें
+            {t('continue')}
           </Button>
           <Button variant="ghost" className="w-full" onClick={() => router.push('/customer/dashboard')}>
-            गेस्ट के रूप में देखें
+            {t('view_as_guest')}
           </Button>
         </CardFooter>
       </Card>

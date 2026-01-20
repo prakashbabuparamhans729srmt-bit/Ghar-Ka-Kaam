@@ -1,13 +1,17 @@
+'use client';
+
 import { Bell, Home, ListChecks, User } from "lucide-react";
 import Link from "next/link";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/language-context";
 
 export default function CustomerLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { t } = useLanguage();
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 px-4 backdrop-blur-sm md:px-6">
@@ -24,13 +28,13 @@ export default function CustomerLayout({
           <Button variant="outline" size="icon" className="h-8 w-8" asChild>
             <Link href="/customer/notifications">
               <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
+              <span className="sr-only">{t('toggle_notifications')}</span>
             </Link>
           </Button>
           <Button variant="secondary" size="icon" className="rounded-full h-8 w-8" asChild>
             <Link href="/customer/profile">
               <User className="h-4 w-4" />
-              <span className="sr-only">Toggle user menu</span>
+              <span className="sr-only">{t('toggle_user_menu')}</span>
             </Link>
           </Button>
         </div>
@@ -41,19 +45,19 @@ export default function CustomerLayout({
             <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="/customer/bookings">
                     <ListChecks className="h-5 w-5" />
-                    <span>बुकिंग</span>
+                    <span>{t('customerLayout_bookings')}</span>
                 </Link>
             </Button>
             <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="/customer/dashboard">
                     <Home className="h-5 w-5" />
-                    <span>होम</span>
+                    <span>{t('customerLayout_home')}</span>
                 </Link>
             </Button>
              <Button variant="ghost" className="flex h-12 flex-col items-center justify-center gap-1 text-xs" asChild>
                 <Link href="/customer/profile">
                     <User className="h-5 w-5" />
-                    <span>प्रोफाइल</span>
+                    <span>{t('customerLayout_profile')}</span>
                 </Link>
             </Button>
           </div>
