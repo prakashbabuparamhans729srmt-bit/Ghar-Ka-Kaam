@@ -66,7 +66,6 @@ export default function CustomerRegistration() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     localStorage.setItem("customerAddress", values.address);
     router.push("/customer/dashboard");
   }
