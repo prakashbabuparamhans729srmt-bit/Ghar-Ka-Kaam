@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -65,9 +66,11 @@ export default function CustomerRegistration() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     localStorage.setItem("customerName", values.name);
-    // Mobile is saved after verification in the login flow.
-    // We can retrieve it if needed, but for now just setting name and address is enough.
     localStorage.setItem("customerAddress", values.address);
+    const mobile = localStorage.getItem("verifiedMobile");
+    if (mobile) {
+        localStorage.setItem("customerMobile", mobile);
+    }
     toast({
         title: t('registration_success_title'),
         description: t('registration_success_description'),
