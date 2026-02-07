@@ -56,10 +56,24 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => (
 export default function WelcomePage() {
   const router = useRouter();
   const { t } = useLanguage();
-  const { isLoading } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
-  // Redirect logic is now in /login page and other layouts
-  if (isLoading) {
+  React.useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      const isCustomer = !!localStorage.getItem("customerName");
+      const isProvider = !!localStorage.getItem("providerName");
+      
+      if (isCustomer) {
+        router.replace('/customer/dashboard');
+      } else if (isProvider) {
+        router.replace('/provider/dashboard');
+      } else {
+        router.replace('/role-selection');
+      }
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  if (isLoading || (!isLoading && isAuthenticated)) {
       return (
           <div className="flex min-h-screen w-full items-center justify-center bg-background">
               <Loader2 className="h-8 w-8 animate-spin text-white" />

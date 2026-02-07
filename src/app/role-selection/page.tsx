@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Star, ArrowLeft } from "lucide-react";
+import { Star, ArrowLeft, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Logo from "@/components/logo";
 import { useLanguage } from "@/context/language-context";
 import Link from "next/link";
+import { useAuth } from "@/context/auth-context";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => (
     <div className="flex min-h-screen w-full bg-background">
@@ -58,6 +59,23 @@ export default function RoleSelection() {
   const [role, setRole] = React.useState("customer");
   const router = useRouter();
   const { t } = useLanguage();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  React.useEffect(() => {
+    if (!isLoading) {
+      if (!isAuthenticated) {
+        router.replace('/login');
+      } else {
+        const isCustomer = !!localStorage.getItem("customerName");
+        const isProvider = !!localStorage.getItem("providerName");
+        if (isCustomer) {
+          router.replace('/customer/dashboard');
+        } else if (isProvider) {
+          router.replace('/provider/dashboard');
+        }
+      }
+    }
+  }, [isAuthenticated, isLoading, router]);
 
   const handleContinue = () => {
     if (role === "customer") {
@@ -67,6 +85,18 @@ export default function RoleSelection() {
     }
     // Add other roles logic here
   };
+
+  const hasProfile = !isLoading && isAuthenticated && (!!localStorage.getItem("customerName") || !!localStorage.getItem("providerName"));
+
+  if (isLoading || !isAuthenticated || hasProfile) {
+    return (
+        <AuthLayout>
+            <div className="flex w-full items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin" />
+            </div>
+        </AuthLayout>
+    );
+  }
 
   return (
     <AuthLayout>
