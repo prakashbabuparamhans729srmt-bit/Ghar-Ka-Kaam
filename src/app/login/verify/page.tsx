@@ -66,15 +66,15 @@ function VerifyOtpComponent() {
     };
 
     return (
-        <Card className="w-full max-w-md bg-transparent border-0 shadow-none text-white">
+        <Card className="w-full max-w-md bg-transparent border-0 shadow-none">
             <CardHeader>
                 <div className="flex items-center gap-4">
-                    <Button variant="outline" size="icon" onClick={() => router.back()} className="bg-transparent hover:bg-white/10 text-white hover:text-white border-white/20">
+                    <Button variant="outline" size="icon" onClick={() => router.back()} className="bg-transparent hover:bg-muted">
                         <ArrowLeft className="h-4 w-4" />
                     </Button>
                     <CardTitle className="font-headline text-xl">{t('otp_verify_title')}</CardTitle>
                 </div>
-                <CardDescription className="text-white/70">
+                <CardDescription className="text-muted-foreground">
                     {t('otp_verify_description_login', { mobile: mobile || '...' })}
                 </CardDescription>
             </CardHeader>
@@ -90,19 +90,19 @@ function VerifyOtpComponent() {
                             onChange={(e) => setOtp(e.target.value)}
                             maxLength={6}
                             placeholder="——"
-                            className="col-span-4 text-center text-2xl tracking-[1rem] bg-white/5 border-0 font-mono focus-visible:ring-cyan-500"
+                            className="col-span-4 text-center text-2xl tracking-[1rem] bg-muted/50 border-0 font-mono focus-visible:ring-ring"
                         />
                     </div>
                 </div>
-                 <div className="text-center text-sm text-white/70">
+                 <div className="text-center text-sm text-muted-foreground">
                     {t('didnt_receive_code')}{' '}
-                    <Button variant="link" className="p-0 h-auto font-semibold text-cyan-400">
+                    <Button variant="link" className="p-0 h-auto font-semibold text-primary">
                         {t('resend_otp')}
                     </Button>
                 </div>
             </CardContent>
             <CardFooter>
-                <Button onClick={handleVerifyOtp} className="w-full bg-cyan-400 text-black hover:bg-cyan-500 font-bold" disabled={isLoading}>
+                <Button onClick={handleVerifyOtp} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold" disabled={isLoading}>
                     {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                     {t('verify')}
                 </Button>

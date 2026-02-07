@@ -6,11 +6,10 @@ export default function RegisterLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="dark">
-      <div className="flex min-h-screen w-full bg-[#111827]">
+      <div className="flex min-h-screen w-full bg-background">
         <div 
           className="hidden md:flex md:w-2/5 flex-col justify-between p-12 text-white"
-          style={{background: 'linear-gradient(145deg, hsl(195, 53%, 25%), hsl(263, 60%, 25%))'}}
+          style={{background: 'linear-gradient(145deg, hsl(175, 95%, 10%), hsl(0, 0%, 3%))'}}
         >
           <div>
             <div className="flex items-center gap-3 text-2xl font-bold font-headline">
@@ -39,6 +38,5 @@ export default function RegisterLayout({
           {children}
         </main>
       </div>
-    </div>
   );
 }

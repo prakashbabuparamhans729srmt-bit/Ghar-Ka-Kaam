@@ -70,15 +70,15 @@ export default function LoginPage() {
     }
 
     return (
-        <Card className="w-full max-w-md bg-transparent border-0 shadow-none text-white">
+        <Card className="w-full max-w-md bg-transparent border-0 shadow-none">
             <CardHeader>
                 <div className="flex items-center gap-4">
-                    <Button variant="outline" size="icon" className="bg-transparent hover:bg-white/10 text-white hover:text-white border-white/20" asChild>
+                    <Button variant="outline" size="icon" className="bg-transparent hover:bg-muted" asChild>
                         <Link href="/"><ArrowLeft className="h-4 w-4" /></Link>
                     </Button>
                     <CardTitle className="font-headline text-2xl">{t('login_with_mobile_title')}</CardTitle>
                 </div>
-                <CardDescription className="text-white/70">{t('login_with_mobile_description')}</CardDescription>
+                <CardDescription className="text-muted-foreground">{t('login_with_mobile_description')}</CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
                 <div className="grid gap-2">
@@ -89,14 +89,14 @@ export default function LoginPage() {
                             id="mobile"
                             type="tel"
                             placeholder="9876543210"
-                            className="pl-10 bg-white/5 border-white/20 focus-visible:ring-cyan-500"
+                            className="pl-10 focus-visible:ring-ring"
                             value={mobile}
                             onChange={(e) => setMobile(e.target.value)}
                             maxLength={10}
                         />
                     </div>
                 </div>
-                <Button onClick={handleSendOtp} className="w-full bg-cyan-400 text-black hover:bg-cyan-500 font-bold" disabled={isLoading}>
+                <Button onClick={handleSendOtp} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold" disabled={isLoading}>
                     {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Phone className="mr-2 h-4 w-4" />}
                     {t('customerRegistration_sendOtp')}
                 </Button>

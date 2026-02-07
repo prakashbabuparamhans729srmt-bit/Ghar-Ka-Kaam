@@ -2,14 +2,14 @@ import { Hammer, Lightbulb, PaintRoller, ShowerHead, Snowflake, Sofa, Tv2 } from
 import { BroomIcon } from "@/components/icons/broom-icon";
 
 export const getServiceCategories = (t: (key: string) => string) => [
-    { id: "plumbing", name: t('service_plumbing'), icon: ShowerHead, price: "300", color: "bg-cyan-500/10 text-cyan-500", href: "/customer/services/plumbing" },
-    { id: "electrical", name: t('service_electrical'), icon: Lightbulb, price: "250", color: "bg-orange-500/10 text-orange-500", href: "/customer/services/electrical" },
-    { id: "cleaning", name: t('service_cleaning'), icon: BroomIcon, price: "500", color: "bg-emerald-500/10 text-emerald-500", href: "/customer/services/cleaning" },
-    { id: "ac", name: t('service_ac'), icon: Snowflake, price: "600", color: "bg-sky-500/10 text-sky-500", href: "/customer/services/ac" },
-    { id: "painting", name: t('service_painting'), icon: PaintRoller, price: "800", color: "bg-violet-500/10 text-violet-500", href: "/customer/services/painting" },
-    { id: "carpenter", name: t('service_carpenter'), icon: Hammer, price: "450", color: "bg-yellow-700/10 text-yellow-700", href: "/customer/services/carpenter" },
-    { id: "furniture", name: t('service_furniture'), icon: Sofa, price: "700", color: "bg-rose-500/10 text-rose-500", href: "/customer/services/furniture" },
-    { id: "tv", name: t('service_tv'), icon: Tv2, price: "550", color: "bg-indigo-500/10 text-indigo-500", href: "/customer/services/tv" },
+    { id: "plumbing", name: t('service_plumbing'), icon: ShowerHead, price: "300", color: "bg-primary/10 text-primary", href: "/customer/services/plumbing" },
+    { id: "electrical", name: t('service_electrical'), icon: Lightbulb, price: "250", color: "bg-primary/10 text-primary", href: "/customer/services/electrical" },
+    { id: "cleaning", name: t('service_cleaning'), icon: BroomIcon, price: "500", color: "bg-primary/10 text-primary", href: "/customer/services/cleaning" },
+    { id: "ac", name: t('service_ac'), icon: Snowflake, price: "600", color: "bg-primary/10 text-primary", href: "/customer/services/ac" },
+    { id: "painting", name: t('service_painting'), icon: PaintRoller, price: "800", color: "bg-primary/10 text-primary", href: "/customer/services/painting" },
+    { id: "carpenter", name: t('service_carpenter'), icon: Hammer, price: "450", color: "bg-primary/10 text-primary", href: "/customer/services/carpenter" },
+    { id: "furniture", name: t('service_furniture'), icon: Sofa, price: "700", color: "bg-primary/10 text-primary", href: "/customer/services/furniture" },
+    { id: "tv", name: t('service_tv'), icon: Tv2, price: "550", color: "bg-primary/10 text-primary", href: "/customer/services/tv" },
 ];
 
 export const getTopProviders = (t: (key: string) => string) => [

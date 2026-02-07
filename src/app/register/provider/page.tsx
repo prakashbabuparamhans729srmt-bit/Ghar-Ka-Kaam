@@ -46,7 +46,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   const { t } = useLanguage();
   return (
-    <Button type="submit" className="w-full bg-cyan-400 text-black hover:bg-cyan-500 font-bold" disabled={pending}>
+    <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-bold" disabled={pending}>
       {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
       {t('providerRegistration_proceed')}
     </Button>
@@ -107,11 +107,11 @@ export default function ProviderRegistration() {
 
   return (
     <>
-      <Card className="w-full max-w-lg bg-transparent border-0 shadow-none text-white">
+      <Card className="w-full max-w-lg bg-transparent border-0 shadow-none">
           <form ref={formRef} action={formAction}>
             <CardHeader>
               <div className="flex items-center gap-4">
-                <Button variant="outline" size="icon" className="bg-transparent hover:bg-white/10 text-white hover:text-white border-white/20" asChild>
+                <Button variant="outline" size="icon" className="bg-transparent hover:bg-muted" asChild>
                   <Link href="/role-selection">
                     <ArrowLeft className="h-4 w-4" />
                   </Link>
@@ -120,7 +120,7 @@ export default function ProviderRegistration() {
                   🔧 {t('providerRegistration_title')}
                 </CardTitle>
               </div>
-              <CardDescription className="text-white/70">
+              <CardDescription className="text-muted-foreground">
                 {t('providerRegistration_description')}
               </CardDescription>
             </CardHeader>
@@ -128,13 +128,13 @@ export default function ProviderRegistration() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">{t('providerRegistration_nameLabel')}</Label>
-                  <Input id="name" name="name" placeholder={t('providerRegistration_namePlaceholder')} required value={name} onChange={(e) => setName(e.target.value)} className="bg-white/5 border-white/20 focus-visible:ring-cyan-500" />
+                  <Input id="name" name="name" placeholder={t('providerRegistration_namePlaceholder')} required value={name} onChange={(e) => setName(e.target.value)} className="focus-visible:ring-ring" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="mobile">📱 {t('customerRegistration_mobileLabel')}</Label>
                   <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">+91</span>
-                      <Input id="mobile" name="mobile" placeholder="9876543210" required className="pl-10 bg-white/5 border-white/20 focus-visible:ring-cyan-500" value={mobile} onChange={(e) => setMobile(e.target.value)} />
+                      <Input id="mobile" name="mobile" placeholder="9876543210" required className="pl-10 focus-visible:ring-ring" value={mobile} onChange={(e) => setMobile(e.target.value)} />
                   </div>
                 </div>
               </div>
@@ -142,7 +142,7 @@ export default function ProviderRegistration() {
               <div className="space-y-2">
                 <Label htmlFor="serviceType">🔧 {t('providerRegistration_serviceTypeLabel')}</Label>
                 <Select name="serviceType" required onValueChange={setServiceType}>
-                  <SelectTrigger className="bg-white/5 border-white/20 focus:ring-cyan-500">
+                  <SelectTrigger className="focus:ring-ring">
                     <SelectValue placeholder={t('providerRegistration_serviceTypePlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
@@ -166,7 +166,7 @@ export default function ProviderRegistration() {
                     type="number"
                     placeholder={t('providerRegistration_experiencePlaceholder')}
                     required
-                    className="bg-white/5 border-white/20 focus-visible:ring-cyan-500"
+                    className="focus-visible:ring-ring"
                   />
                 </div>
                 <div className="space-y-2">
@@ -178,9 +178,9 @@ export default function ProviderRegistration() {
                           id={`cert-${cert.id}`}
                           name="certifications"
                           value={cert.label}
-                          className="border-white/50 data-[state=checked]:bg-cyan-400 data-[state=checked]:text-black"
+                          className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                         />
-                        <Label htmlFor={`cert-${cert.id}`} className="font-normal text-white/90">
+                        <Label htmlFor={`cert-${cert.id}`} className="font-normal">
                           {cert.label}
                         </Label>
                       </div>
@@ -192,7 +192,7 @@ export default function ProviderRegistration() {
               <div className="space-y-2">
                 <Label htmlFor="workArea">📍 {t('providerRegistration_workAreaLabel')}</Label>
                 <Select name="workArea" required>
-                  <SelectTrigger className="bg-white/5 border-white/20 focus:ring-cyan-500">
+                  <SelectTrigger className="focus:ring-ring">
                     <SelectValue placeholder={t('providerRegistration_workAreaPlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
@@ -211,14 +211,14 @@ export default function ProviderRegistration() {
                 <div className="flex w-full items-center justify-center">
                   <label
                     htmlFor="dropzone-file"
-                    className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-white/20 bg-white/5 hover:bg-white/10"
+                    className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed bg-muted/50 hover:bg-muted"
                   >
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                      <FileUp className="mb-4 h-8 w-8 text-white/50" />
-                      <p className="mb-2 text-sm text-white/70">
+                      <FileUp className="mb-4 h-8 w-8 text-muted-foreground" />
+                      <p className="mb-2 text-sm text-muted-foreground">
                         <span className="font-semibold">{t('providerRegistration_uploadHint')}</span>
                       </p>
-                      <p className="text-xs text-white/50">
+                      <p className="text-xs text-muted-foreground">
                         {t('providerRegistration_uploadSubHint')}
                       </p>
                     </div>
@@ -234,7 +234,7 @@ export default function ProviderRegistration() {
                 {files.length > 0 && (
                   <div className="mt-2 space-y-2">
                     {files.map((file, index) => (
-                      <div key={index} className="text-sm text-white/70">
+                      <div key={index} className="text-sm text-muted-foreground">
                         {file.name}
                       </div>
                     ))}
@@ -245,11 +245,11 @@ export default function ProviderRegistration() {
                 ))}
               </div>
 
-              <Alert className="bg-white/5 border-white/20 text-white">
+              <Alert className="bg-muted/50 border-border">
                 <CardTitle className="text-base font-headline">
                   💼 {t('providerRegistration_commissionModelTitle')}
                 </CardTitle>
-                <AlertDescription className="text-sm text-white/70">
+                <AlertDescription className="text-sm text-muted-foreground">
                   <ul className="mt-2 list-disc space-y-1 pl-5">
                     <li>{t('providerRegistration_platformCommission')}</li>
                     <li>{t('providerRegistration_minimumFee')}</li>
