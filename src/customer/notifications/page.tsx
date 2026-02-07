@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 const notifications = [
     {
-        icon: <CheckCircle className="h-6 w-6 text-green-500" />,
+        icon: <CheckCircle className="h-6 w-6 text-primary" />,
         title: "बुकिंग कन्फर्म!",
         title_en: "Booking Confirmed!",
         description: "राम सिंह के साथ आपकी गीज़र मरम्मत की बुकिंग पक्की हो गई है।",
