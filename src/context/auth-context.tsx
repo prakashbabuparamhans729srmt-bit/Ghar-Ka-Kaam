@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: () => void;
+  login: (mobile?: string) => void;
   logout: () => void;
 }
 
@@ -29,9 +29,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const login = () => {
+  const login = (mobile?: string) => {
     try {
       localStorage.setItem('isAuthenticated', 'true');
+      if (mobile) {
+        // Save mobile number to be used across registration/profile pages
+        localStorage.setItem('verifiedMobile', mobile);
+      }
     } catch (error) {
        console.error("Could not access localStorage", error);
     }
@@ -40,7 +44,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     try {
+      // Clear all user-specific data on logout
       localStorage.removeItem('isAuthenticated');
+      localStorage.removeItem('customerName');
+      localStorage.removeItem('customerMobile');
+      localStorage.removeItem('customerAddress');
+      localStorage.removeItem('providerName');
+      localStorage.removeItem('providerMobile');
+      localStorage.removeItem('providerService');
+      localStorage.removeItem('verifiedMobile');
     } catch (error) {
        console.error("Could not access localStorage", error);
     }

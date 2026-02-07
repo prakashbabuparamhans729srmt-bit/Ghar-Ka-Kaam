@@ -3,7 +3,7 @@
 import { useFormState, useFormStatus } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, CheckCircle, FileUp, Loader2, XCircle } from "lucide-react";
+import { ArrowLeft, FileUp, Loader2, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 
@@ -30,7 +30,6 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useLanguage } from "@/context/language-context";
-import { useAuth } from "@/context/auth-context";
 
 const initialState = {
   message: "",
@@ -59,13 +58,9 @@ export default function ProviderRegistration() {
   const { toast } = useToast();
   const router = useRouter();
   const { t } = useLanguage();
-  const { login } = useAuth();
   const formRef = useRef<HTMLFormElement>(null);
   const [files, setFiles] = useState<File[]>([]);
   const [base64Files, setBase64Files] = useState<string[]>([]);
-  
-  const [step, setStep] = useState<'details' | 'otp'>('details');
-  const [otp, setOtp] = useState("");
   
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -76,12 +71,15 @@ export default function ProviderRegistration() {
 
   useEffect(() => {
     if (formState.message === 'verification_successful' && formState.data?.isValid) {
-      setStep('otp');
       toast({
         title: t('providerRegistration_aiVerificationSuccess'),
-        description: t('providerRegistration_verifyMobile'),
         variant: 'default',
       });
+      localStorage.setItem("providerName", name);
+      localStorage.setItem("providerMobile", mobile);
+      localStorage.setItem("providerService", serviceType);
+      router.push("/provider/dashboard");
+
     } else if (formState.message && formState.message !== 'verification_successful') {
       toast({
         title: t('providerRegistration_error'),
@@ -89,31 +87,8 @@ export default function ProviderRegistration() {
         variant: 'destructive',
       });
     }
-  }, [formState, toast, t]);
+  }, [formState, toast, t, name, mobile, serviceType, router]);
 
-  const handleOtpVerify = () => {
-    if (otp === "123456") {
-      localStorage.setItem("providerName", name);
-      localStorage.setItem("providerMobile", mobile);
-      localStorage.setItem("providerService", serviceType);
-      login();
-      toast({
-        title: t('registration_success_title'),
-        description: t('registration_success_description'),
-        variant: "default",
-      });
-      formRef.current?.reset();
-      setFiles([]);
-      setBase64Files([]);
-      router.push("/provider/dashboard");
-    } else {
-      toast({
-        title: t('wrong_otp_title'),
-        description: t('wrong_otp_description'),
-        variant: "destructive",
-      });
-    }
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -133,7 +108,6 @@ export default function ProviderRegistration() {
   return (
     <>
       <Card className="w-full max-w-lg shadow-2xl">
-        {step === 'details' && (
           <form ref={formRef} action={formAction}>
             <CardHeader>
               <div className="flex items-center gap-4">
@@ -295,48 +269,6 @@ export default function ProviderRegistration() {
               <SubmitButton />
             </CardFooter>
           </form>
-        )}
-        {step === 'otp' && (
-           <>
-            <CardHeader>
-                <div className="flex items-center gap-4">
-                    <Button variant="outline" size="icon" onClick={() => setStep('details')}>
-                        <ArrowLeft className="h-4 w-4" />
-                    </Button>
-                    <CardTitle className="font-headline text-xl">{t('otp_verify_title')}</CardTitle>
-                </div>
-                <CardDescription>
-                    {t('otp_verify_description')} (+91 {mobile})
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-6">
-                <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-1 items-center gap-4">
-                        <Label htmlFor="otp" className="text-right sr-only">
-                            OTP
-                        </Label>
-                        <Input
-                            id="otp"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            maxLength={6}
-                            placeholder="——"
-                            className="col-span-4 text-center text-2xl tracking-[1rem] bg-secondary border-0 font-mono"
-                        />
-                    </div>
-                </div>
-                 <div className="text-center text-sm">
-                    {t('didnt_receive_code')}{' '}
-                    <Button variant="link" className="p-0 h-auto font-semibold">
-                        {t('resend_otp')}
-                    </Button>
-                </div>
-            </CardContent>
-            <CardFooter className="flex flex-col gap-4">
-                <Button onClick={handleOtpVerify} className="w-full">{t('verify')}</Button>
-            </CardFooter>
-           </>
-        )}
       </Card>
     </>
   );

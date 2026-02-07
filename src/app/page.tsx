@@ -20,22 +20,10 @@ import { useAuth } from "@/context/auth-context";
 export default function WelcomePage() {
   const router = useRouter();
   const { t } = useLanguage();
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isLoading } = useAuth();
 
-  React.useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      const isCustomer = !!localStorage.getItem("customerName");
-      const isProvider = !!localStorage.getItem("providerName");
-      
-      if (isCustomer) {
-        router.replace('/customer/dashboard');
-      } else if (isProvider) {
-        router.replace('/provider/dashboard');
-      }
-    }
-  }, [isAuthenticated, isLoading, router]);
-
-  if (isLoading || (!isLoading && isAuthenticated)) {
+  // Redirect logic is now in /login page and other layouts
+  if (isLoading) {
       return (
           <div className="flex min-h-screen w-full items-center justify-center bg-background">
               <Loader2 className="h-8 w-8 animate-spin" />
@@ -58,7 +46,7 @@ export default function WelcomePage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          <Button className="w-full py-6 text-base" onClick={() => router.push('/role-selection')}>
+          <Button className="w-full py-6 text-base" onClick={() => router.push('/login')}>
             <Phone className="mr-2 h-5 w-5" />
             {t('signup_with_mobile')}
           </Button>

@@ -181,5 +181,11 @@
     "signup_with_mobile": "Sign up with Mobile",
     "signup_with_email": "Sign up with Email",
     "by_continuing_agree": "By continuing, you agree to our Terms of Service and Privacy Policy.",
-    "choose_your_role": "Choose your role"
+    "choose_your_role": "Choose your role",
+    "complete_registration": "Complete Registration",
+    "login_with_mobile_title": "Login with Mobile",
+    "login_with_mobile_description": "Enter your mobile number to receive a verification code.",
+    "otp_verify_description_login": "Enter the 6-digit code sent to +91 {mobile}",
+    "login_successful_title": "Login Successful",
+    "login_successful_description": "Welcome back!"
 }

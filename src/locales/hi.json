@@ -181,5 +181,11 @@
     "signup_with_mobile": "मोबाइल से साइन अप करें",
     "signup_with_email": "ईमेल से साइन अप करें",
     "by_continuing_agree": "आगे बढ़कर, आप हमारी सेवा की शर्तों और गोपनीयता नीति से सहमत हैं।",
-    "choose_your_role": "अपनी भूमिका चुनें"
+    "choose_your_role": "अपनी भूमिका चुनें",
+    "complete_registration": "पंजीकरण पूरा करें",
+    "login_with_mobile_title": "मोबाइल से लॉगिन करें",
+    "login_with_mobile_description": "वेरिफिकेशन कोड प्राप्त करने के लिए अपना मोबाइल नंबर दर्ज करें।",
+    "otp_verify_description_login": "आपके मोबाइल नंबर +91 {mobile} पर भेजा गया 6 अंकों का कोड दर्ज करें।",
+    "login_successful_title": "लॉगिन सफल",
+    "login_successful_description": "वापस स्वागत है!"
 }
