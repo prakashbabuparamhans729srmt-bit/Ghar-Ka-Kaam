@@ -106,7 +106,7 @@ export default function CustomerDashboard() {
           <h2 className="text-xl font-bold font-headline">{t('customerDashboard_topRatedProviders')}</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {topProviders.slice(0, 2).map((provider) => (
-              <Card key={provider.name}>
+              <Card key={provider.name} className="transition-all hover:shadow-primary/20 hover:shadow-lg hover:-translate-y-1">
                 <CardContent className="p-4 flex items-center gap-4">
                   <Avatar className="h-16 w-16">
                     <AvatarImage src={`https://i.pravatar.cc/150?u=${provider.providerId}`} />
@@ -114,7 +114,7 @@ export default function CustomerDashboard() {
                   </Avatar>
                   <div className="flex-1 space-y-1">
                     <p className="font-bold">{provider.name} <span className="text-sm font-normal text-muted-foreground">({provider.service})</span></p>
-                    <div className="flex items-center gap-1 text-sm text-yellow-500">
+                    <div className="flex items-center gap-1 text-sm text-primary">
                       <Star className="h-4 w-4 fill-current" />
                       <span className="font-bold">{provider.rating}</span>
                     </div>

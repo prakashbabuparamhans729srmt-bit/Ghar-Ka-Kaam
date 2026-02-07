@@ -116,7 +116,7 @@ export default function ProviderJobsPage() {
                                     <p className="text-sm text-muted-foreground">{t('customer')}: {job.customer}</p>
                                     <p className="text-xs text-muted-foreground">{locale === 'hi' ? job.time_hi : job.time_en}</p>
                                   </div>
-                                  <div className="flex items-center gap-1 text-yellow-500">
+                                  <div className="flex items-center gap-1 text-primary">
                                       <Star className="h-5 w-5 fill-current" />
                                       <span className="font-bold text-lg">{job.rating}.0</span>
                                   </div>

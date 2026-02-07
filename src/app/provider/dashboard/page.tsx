@@ -125,7 +125,7 @@ export default function ProviderDashboard() {
             <CardContent>
               <div className="flex items-center gap-2">
                 <div className="text-2xl font-bold">4.9</div>
-                <Star className="h-6 w-6 text-yellow-400 fill-yellow-400" />
+                <Star className="h-6 w-6 text-primary fill-primary" />
               </div>
               <p className="text-xs text-muted-foreground">
                 {t('providerDashboard_ratingBasedOn', { count: 55 })}
@@ -150,7 +150,7 @@ export default function ProviderDashboard() {
               </Card>
             ) : (
               jobRequests.map(job => (
-                <Card key={job.id}>
+                <Card key={job.id} className="transition-colors hover:bg-muted/50">
                   <CardContent className="p-4 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <Avatar className="h-12 w-12 hidden sm:flex">
                       <AvatarImage src={job.avatar} />

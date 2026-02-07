@@ -140,7 +140,7 @@ export default function ServiceProvidersPage() {
               </Avatar>
               <div className="flex-1 space-y-1">
                 <p className="font-bold">{provider.name} <span className="text-sm font-normal text-muted-foreground">({provider.service})</span></p>
-                <div className="flex items-center gap-1 text-sm text-yellow-500">
+                <div className="flex items-center gap-1 text-sm text-primary">
                   <Star className="h-4 w-4 fill-current" />
                   <span className="font-bold">{provider.rating}</span>
                 </div>

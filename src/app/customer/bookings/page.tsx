@@ -17,7 +17,7 @@ const bookings = [
         date_en: 'July 25, 2024',
         status: 'Confirmed',
         status_hi: 'पक्की हो गई',
-        icon: <CheckCircle className="h-4 w-4 text-green-500" />
+        icon: <CheckCircle className="h-4 w-4 text-primary" />
     },
     {
         id: 'BK002',
@@ -28,7 +28,7 @@ const bookings = [
         date_en: 'July 28, 2024',
         status: 'Pending',
         status_hi: 'लंबित',
-        icon: <Clock className="h-4 w-4 text-orange-500" />
+        icon: <Clock className="h-4 w-4 text-muted-foreground" />
     }
 ];
 

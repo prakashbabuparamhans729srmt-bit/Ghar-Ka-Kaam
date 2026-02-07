@@ -64,7 +64,7 @@
 
   .booking-confirmed {
     animation: booking-confirm 0.6s ease-out;
-    background: linear-gradient(135deg, #10B981, #059669);
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(175 95% 38%));
   }
 
   @keyframes provider-arrival {
@@ -74,17 +74,17 @@
 
   .provider-arriving {
     animation: provider-arrival 0.8s ease-out;
-    background: linear-gradient(90deg, #7C3AED, #8B5CF6);
+    background: linear-gradient(90deg, hsl(var(--secondary)), hsl(var(--muted)));
   }
 
   @keyframes earnings-pulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(245, 158, 11, 0.5); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px hsl(var(--primary) / 0.5); }
   }
 
   .earning-update {
     animation: earnings-pulse 1s ease-in-out;
-    background: linear-gradient(45deg, #F59E0B, #FBBF24);
+    background: linear-gradient(45deg, hsl(var(--primary)), hsl(175 95% 58%));
   }
 
   @keyframes voice-listening {
@@ -94,7 +94,7 @@
 
   .voice-listening {
     animation: voice-listening 1s infinite;
-    background: #10B981;
+    background: hsl(var(--primary));
   }
 
   @keyframes sync-spin {

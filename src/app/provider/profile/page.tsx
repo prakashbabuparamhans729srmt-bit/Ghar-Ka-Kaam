@@ -56,7 +56,7 @@ export default function ProviderProfilePage() {
                 <h2 className="text-xl font-bold">{providerName}</h2>
                 <p className="text-muted-foreground">{serviceNameMap[providerService] || providerService}</p>
             </div>
-            <Badge variant="outline">{t('providerProfile_verified')}</Badge>
+            <Badge variant="default">{t('providerProfile_verified')}</Badge>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
               <Button variant="outline">{t('edit_profile')}</Button>
               <Button variant="outline" asChild>

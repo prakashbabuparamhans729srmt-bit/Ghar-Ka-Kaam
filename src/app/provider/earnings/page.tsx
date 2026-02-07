@@ -114,7 +114,7 @@ export default function ProviderEarningsPage() {
                             <p className="font-medium">{locale === 'hi' ? tx.service_hi : tx.service_en}</p>
                             <p className="text-sm text-muted-foreground">{t('customer')}: {tx.customer} - {locale === 'hi' ? tx.date_hi : tx.date_en}</p>
                         </div>
-                        <p className="font-bold text-green-600">+ ₹{tx.amount}</p>
+                        <p className="font-bold text-primary">+ ₹{tx.amount}</p>
                     </li>
                 ))}
             </ul>

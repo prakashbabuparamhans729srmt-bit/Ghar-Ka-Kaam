@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 const notifications = [
     {
-        icon: <CheckCircle className="h-6 w-6 text-green-500" />,
+        icon: <CheckCircle className="h-6 w-6 text-primary" />,
         title: "बुकिंग कन्फर्म!",
         title_en: "Booking Confirmed!",
         description: "राम सिंह के साथ आपकी गीज़र मरम्मत की बुकिंग पक्की हो गई है।",
@@ -29,7 +29,7 @@ const notifications = [
         isNew: false,
     },
      {
-        icon: <Bot className="h-6 w-6 text-violet-500" />,
+        icon: <Bot className="h-6 w-6 text-primary" />,
         title: "नई सुविधा!",
         title_en: "New Feature!",
         description: "अब आप ऐप से सीधे TV इंस्टॉलेशन भी बुक कर सकते हैं।",
