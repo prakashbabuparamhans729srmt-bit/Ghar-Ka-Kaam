@@ -106,15 +106,15 @@ export default function CustomerRegistration() {
   };
 
   return (
-      <Card className="w-full max-w-lg shadow-2xl">
+      <Card className="w-full max-w-lg bg-transparent border-0 shadow-none text-white">
             <CardHeader>
               <div className="flex items-center gap-4">
-                  <Button variant="outline" size="icon" asChild>
+                  <Button variant="outline" size="icon" className="bg-transparent hover:bg-white/10 text-white hover:text-white border-white/20" asChild>
                       <Link href="/role-selection"><ArrowLeft className="h-4 w-4" /></Link>
                   </Button>
-                  <CardTitle className="font-headline text-xl">📱 {t('customerRegistration_title')}</CardTitle>
+                  <CardTitle className="font-headline text-2xl">📱 {t('customerRegistration_title')}</CardTitle>
               </div>
-              <CardDescription>{t('customerRegistration_description')}</CardDescription>
+              <CardDescription className="text-white/70">{t('customerRegistration_description')}</CardDescription>
             </CardHeader>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -126,7 +126,7 @@ export default function CustomerRegistration() {
                       <FormItem>
                         <FormLabel>👤 {t('customerRegistration_nameLabel')}</FormLabel>
                         <FormControl>
-                          <Input placeholder={t('customerRegistration_namePlaceholder')} {...field} />
+                          <Input placeholder={t('customerRegistration_namePlaceholder')} {...field} className="bg-white/5 border-white/20 focus-visible:ring-cyan-500" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -141,12 +141,12 @@ export default function CustomerRegistration() {
                         <FormLabel>📍 {t('customerRegistration_addressLabel')}</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Input placeholder={t('customerRegistration_addressPlaceholder')} {...field} />
+                            <Input placeholder={t('customerRegistration_addressPlaceholder')} {...field} className="bg-white/5 border-white/20 focus-visible:ring-cyan-500" />
                             <Button
                               type="button"
                               variant="ghost"
                               size="icon"
-                              className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2"
+                              className="absolute right-1 top-1/2 h-8 w-8 -translate-y-1/2 hover:bg-white/10"
                               onClick={handleLocateMe}
                             >
                               <LocateIcon className="h-4 w-4" />
@@ -166,7 +166,7 @@ export default function CustomerRegistration() {
                         <FormLabel>🏠 {t('customerRegistration_houseTypeLabel')}</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className="bg-white/5 border-white/20 focus:ring-cyan-500">
                               <SelectValue placeholder={t('customerRegistration_houseTypePlaceholder')} />
                             </SelectTrigger>
                           </FormControl>
@@ -189,7 +189,7 @@ export default function CustomerRegistration() {
                     render={() => (
                       <FormItem>
                         <FormLabel>🎯 {t('customerRegistration_preferredServicesLabel')}</FormLabel>
-                        <div className="grid grid-cols-2 gap-4 rounded-md border p-4">
+                        <div className="grid grid-cols-2 gap-4 rounded-md border border-white/20 p-4">
                           {services.map((item) => (
                             <FormField
                               key={item.id}
@@ -203,6 +203,7 @@ export default function CustomerRegistration() {
                                   >
                                     <FormControl>
                                       <Checkbox
+                                        className="border-white/50 data-[state=checked]:bg-cyan-400 data-[state=checked]:text-black"
                                         checked={field.value?.includes(item.id)}
                                         onCheckedChange={(checked) => {
                                           return checked
@@ -215,7 +216,7 @@ export default function CustomerRegistration() {
                                         }}
                                       />
                                     </FormControl>
-                                    <FormLabel className="font-normal">
+                                    <FormLabel className="font-normal text-white/90">
                                       {item.name}
                                     </FormLabel>
                                   </FormItem>
@@ -230,7 +231,7 @@ export default function CustomerRegistration() {
                   />
                 </CardContent>
                 <CardFooter>
-                  <Button type="submit" className="w-full">{t('complete_registration')}</Button>
+                  <Button type="submit" className="w-full bg-cyan-400 text-black hover:bg-cyan-500 font-bold">{t('complete_registration')}</Button>
                 </CardFooter>
               </form>
             </Form>
