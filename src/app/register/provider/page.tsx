@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useFormState, useFormStatus } from "react-dom";
@@ -68,6 +69,20 @@ export default function ProviderRegistration() {
   
   const certifications = certificationsData.map(c => ({...c, label: t(c.labelKey)}));
 
+  useEffect(() => {
+    const verifiedMobile = localStorage.getItem("verifiedMobile");
+    if (verifiedMobile) {
+      setMobile(verifiedMobile);
+    } else {
+      toast({
+        title: "Mobile number not found",
+        description: "Please go back and verify your mobile number first.",
+        variant: "destructive"
+      });
+      router.push('/login');
+    }
+  }, [router, toast]);
+
 
   useEffect(() => {
     if (formState.message === 'verification_successful' && formState.data?.isValid) {
@@ -134,7 +149,7 @@ export default function ProviderRegistration() {
                   <Label htmlFor="mobile">📱 {t('customerRegistration_mobileLabel')}</Label>
                   <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">+91</span>
-                      <Input id="mobile" name="mobile" placeholder="9876543210" required className="pl-10 focus-visible:ring-ring" value={mobile} onChange={(e) => setMobile(e.target.value)} />
+                      <Input id="mobile" name="mobile" placeholder="9876543210" required className="pl-10 focus-visible:ring-ring" value={mobile} readOnly />
                   </div>
                 </div>
               </div>
@@ -275,3 +290,5 @@ export default function ProviderRegistration() {
     </>
   );
 }
+
+    
