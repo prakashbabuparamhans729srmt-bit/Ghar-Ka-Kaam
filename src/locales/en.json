@@ -176,5 +176,10 @@
     "jobs_completed": "Completed",
     "jobs_start_job": "Start Job",
     "jobs_contact_customer": "Contact Customer",
-    "no_completed_jobs": "No completed jobs."
+    "no_completed_jobs": "No completed jobs.",
+    "welcome_title": "Welcome to GharKaam",
+    "signup_with_mobile": "Sign up with Mobile",
+    "signup_with_email": "Sign up with Email",
+    "by_continuing_agree": "By continuing, you agree to our Terms of Service and Privacy Policy.",
+    "choose_your_role": "Choose your role"
 }

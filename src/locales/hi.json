@@ -176,5 +176,10 @@
     "jobs_completed": "पूर्ण",
     "jobs_start_job": "जॉब शुरू करें",
     "jobs_contact_customer": "ग्राहक से संपर्क करें",
-    "no_completed_jobs": "कोई पूर्ण जॉब नहीं है।"
+    "no_completed_jobs": "कोई पूर्ण जॉब नहीं है।",
+    "welcome_title": "GharKaam में आपका स्वागत है",
+    "signup_with_mobile": "मोबाइल से साइन अप करें",
+    "signup_with_email": "ईमेल से साइन अप करें",
+    "by_continuing_agree": "आगे बढ़कर, आप हमारी सेवा की शर्तों और गोपनीयता नीति से सहमत हैं।",
+    "choose_your_role": "अपनी भूमिका चुनें"
 }
